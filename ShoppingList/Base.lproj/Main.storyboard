@@ -73,14 +73,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSy-7X-8O7">
-                                <rect key="frame" x="28" y="323" width="90" height="21"/>
+                                <rect key="frame" x="16" y="241" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter shop name here...." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wia-C0-SUo">
-                                <rect key="frame" x="143" y="318.5" width="196" height="30"/>
+                                <rect key="frame" x="145" y="237" width="189" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6a-aG-VnP">
+                                <rect key="frame" x="16" y="321" width="90" height="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter address here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axe-MQ-fcM">
+                                <rect key="frame" x="145" y="318" width="189" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -88,11 +100,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="LSy-7X-8O7" firstAttribute="centerY" secondItem="Wia-C0-SUo" secondAttribute="centerY" id="RBl-zn-wRo"/>
-                            <constraint firstItem="Wia-C0-SUo" firstAttribute="leading" secondItem="LSy-7X-8O7" secondAttribute="trailing" constant="25" id="RuA-xY-SME"/>
-                            <constraint firstItem="sTZ-lN-uqF" firstAttribute="trailing" secondItem="Wia-C0-SUo" secondAttribute="trailing" constant="36" id="WOD-H0-508"/>
-                            <constraint firstItem="LSy-7X-8O7" firstAttribute="centerY" secondItem="OfJ-Zf-pl8" secondAttribute="centerY" id="beM-FX-TbA"/>
-                            <constraint firstItem="LSy-7X-8O7" firstAttribute="leading" secondItem="sTZ-lN-uqF" secondAttribute="leading" constant="28" id="wkR-Tu-nbi"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="leading" secondItem="T6a-aG-VnP" secondAttribute="leading" id="7VH-4J-qjn"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="trailing" secondItem="T6a-aG-VnP" secondAttribute="trailing" id="BsA-uh-i7d"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="top" secondItem="sTZ-lN-uqF" secondAttribute="top" constant="177" id="Ims-yl-QIK"/>
+                            <constraint firstItem="sTZ-lN-uqF" firstAttribute="trailing" secondItem="Wia-C0-SUo" secondAttribute="trailing" constant="41" id="OeO-45-DRV"/>
+                            <constraint firstItem="T6a-aG-VnP" firstAttribute="leading" secondItem="sTZ-lN-uqF" secondAttribute="leading" constant="16" id="Olx-SV-VTJ"/>
+                            <constraint firstItem="T6a-aG-VnP" firstAttribute="top" secondItem="LSy-7X-8O7" secondAttribute="bottom" constant="59" id="Q3y-KK-9BM"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="baseline" secondItem="Wia-C0-SUo" secondAttribute="baseline" id="cwg-tv-0IK"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="leading" secondItem="sTZ-lN-uqF" secondAttribute="leading" constant="16" id="hFW-Yr-abO"/>
+                            <constraint firstItem="axe-MQ-fcM" firstAttribute="centerY" secondItem="T6a-aG-VnP" secondAttribute="centerY" id="jZH-BI-s73"/>
+                            <constraint firstItem="axe-MQ-fcM" firstAttribute="top" secondItem="Wia-C0-SUo" secondAttribute="bottom" constant="51" id="kf2-oC-GJw"/>
+                            <constraint firstItem="sTZ-lN-uqF" firstAttribute="trailing" secondItem="axe-MQ-fcM" secondAttribute="trailing" constant="41" id="lvk-Dy-cPr"/>
+                            <constraint firstItem="Wia-C0-SUo" firstAttribute="leading" secondItem="LSy-7X-8O7" secondAttribute="trailing" constant="39" id="lz1-IA-gbE"/>
+                            <constraint firstItem="axe-MQ-fcM" firstAttribute="trailing" secondItem="Wia-C0-SUo" secondAttribute="trailing" id="ztB-69-eK0"/>
+                            <constraint firstItem="axe-MQ-fcM" firstAttribute="leading" secondItem="T6a-aG-VnP" secondAttribute="trailing" constant="39" id="ztb-GT-rg8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sTZ-lN-uqF"/>
                     </view>
