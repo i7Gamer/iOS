@@ -90,6 +90,7 @@ class ShopTableViewController: UITableViewController {
             let managedContext = appDelegate.persistentContainer.viewContext
             let shop = shops[indexPath.row]
             managedContext.delete(shop);
+            shops.remove(at: indexPath.row)
             self.tableView.reloadData()
         }
     }
