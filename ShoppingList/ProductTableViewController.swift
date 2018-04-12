@@ -23,11 +23,19 @@ class ProductTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addProduct(sender:)))
         title = "Products for " + shopName
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // get app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        // get managed context
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // request
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        // load data
+        do {
+            items = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,48 +47,58 @@ class ProductTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        print(items.count)
+        return items.count;
     }
     
     @objc func addProduct(sender: Any?) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! AddProductViewController
+        let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! UINavigationController
         
         self.present(destination, animated: true, completion: nil)
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = items[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
+        cell.textLabel?.text = item.value(forKeyPath: "name") as? String
+        return cell
+    }
+    
     @IBAction func saveProduct(_ segue:UIStoryboardSegue){
-        if let svc = segue.source as? AddProductViewController {
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            
-            var max : Int16 = 0;
-            
-            for item in items{
-                if(item.id > max){
-                    max = item.id
+        //if let nav = segue.source as? UINavigationController {
+            if let svc = segue.source as? AddProductViewController {
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                let managedContext = appDelegate.persistentContainer.viewContext
+                
+                var max : Int16 = 0;
+                
+                for item in items{
+                    if(item.id > max){
+                        max = item.id
+                    }
                 }
+                max = max + 1
+                
+                let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
+                item.name = svc.productName.text
+                item.id = max;
+                
+                do {
+                    try managedContext.save()
+                    items.append(item)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                
+                self.tableView.reloadData()
             }
-            max = max + 1
-            
-            let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
-            item.name = svc.productName.text
-            item.id = max;
-            do {
-                try managedContext.save()
-                items.append(item)
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-            }
-            
-            self.tableView.reloadData()
-        }
+        //}
     }
     
     @IBAction func cancelAddProduct(_ segue:UIStoryboardSegue){
