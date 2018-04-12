@@ -321,7 +321,7 @@ CA
                         <viewLayoutGuide key="safeArea" id="0Nd-9A-p1p"/>
                     </view>
                     <navigationItem key="navigationItem" id="33a-KN-lpd">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="7pU-dz-tZl">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7pU-dz-tZl">
                             <connections>
                                 <segue destination="8i4-WD-6zl" kind="unwind" unwindAction="cancelAddProduct:" id="Wec-gq-F1S"/>
                             </connections>

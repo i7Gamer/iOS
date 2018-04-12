@@ -79,6 +79,20 @@ class ShopTableViewController: UITableViewController {
         cell.textLabel?.text = shop.value(forKeyPath: "name") as? String
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let shop = shops[indexPath.row]
+            managedContext.delete(shop);
+            self.tableView.reloadData()
+        }
+    }
  
     @IBAction func saveShop(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? AddShopViewController {
@@ -105,7 +119,6 @@ class ShopTableViewController: UITableViewController {
             }
             
             self.tableView.reloadData()
-            
         }
     }
     
