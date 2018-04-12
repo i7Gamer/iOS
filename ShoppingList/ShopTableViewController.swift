@@ -77,6 +77,7 @@ class ShopTableViewController: UITableViewController {
         let shop = shops[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewcell", for: indexPath)
         cell.textLabel?.text = shop.value(forKeyPath: "name") as? String
+        cell.detailTextLabel?.text = shop.value(forKeyPath: "address") as? String
         return cell
     }
     
