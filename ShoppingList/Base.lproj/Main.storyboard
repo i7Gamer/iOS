@@ -82,6 +82,7 @@
                                 <rect key="frame" x="143" y="318.5" width="196" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
@@ -206,22 +207,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Ui-E1-kKK">
-                                <rect key="frame" x="157" y="217" width="202" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvd-uv-8ak">
-                                <rect key="frame" x="16" y="222" width="133" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvd-uv-8ak">
+                                <rect key="frame" x="16" y="323" width="133" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter product name here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Ui-E1-kKK">
+                                <rect key="frame" x="143" y="319" width="202" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7Ui-E1-kKK" firstAttribute="leading" secondItem="0Nd-9A-p1p" secondAttribute="leading" constant="143" id="4O7-rh-w9e"/>
+                            <constraint firstItem="0Nd-9A-p1p" firstAttribute="trailing" secondItem="7Ui-E1-kKK" secondAttribute="trailing" constant="30" id="A6f-fn-bmx"/>
+                            <constraint firstItem="lvd-uv-8ak" firstAttribute="leading" secondItem="0Nd-9A-p1p" secondAttribute="leading" constant="16" id="B9i-e0-ovw"/>
+                            <constraint firstItem="lvd-uv-8ak" firstAttribute="centerY" secondItem="7Ui-E1-kKK" secondAttribute="centerY" id="JCK-MC-OAF"/>
+                            <constraint firstItem="lvd-uv-8ak" firstAttribute="centerY" secondItem="EYT-GJ-OaP" secondAttribute="centerY" id="fdG-hM-tKy"/>
+                            <constraint firstItem="0Nd-9A-p1p" firstAttribute="trailing" secondItem="lvd-uv-8ak" secondAttribute="trailing" constant="226" id="yTL-Cx-hgm"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="0Nd-9A-p1p"/>
                     </view>
                     <navigationItem key="navigationItem" id="J2n-vo-P7t">
