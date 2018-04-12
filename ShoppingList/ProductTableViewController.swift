@@ -23,11 +23,19 @@ class ProductTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addProduct(sender:)))
         title = "Products for " + shopName
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // get app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        // get managed context
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // request
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        // load data
+        do {
+            items = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +52,7 @@ class ProductTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        print(items.count)
         return items.count;
     }
     
