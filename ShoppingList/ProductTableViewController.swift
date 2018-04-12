@@ -30,6 +30,8 @@ class ProductTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
+        
         // load data
         do {
             items = try managedContext.fetch(fetchRequest)
@@ -88,6 +90,7 @@ class ProductTableViewController: UITableViewController {
                 let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
                 item.name = svc.productName.text
                 item.id = max;
+                item.shopId = shopId;
                 
                 do {
                     try managedContext.save()

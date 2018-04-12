@@ -17,6 +17,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // get app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true}
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            // get all shops
+            let fetchRequestAll = NSFetchRequest<Shop>(entityName: "Shop")
+            var shops = try managedContext.fetch(fetchRequestAll)
+            
+            // get no shop
+            let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
+            fetchRequest.predicate = NSPredicate(format: "name == %@", "No shop")
+            
+            let shop = try managedContext.fetch(fetchRequest)
+            
+            if(shop.count == 0){
+                // save shop
+                
+                var max : Int16 = 0;
+                for shop in shops{
+                    if(shop.id > max){
+                        max = shop.id
+                    }
+                }
+                max = max + 1
+                
+                let shop = NSEntityDescription.insertNewObject(forEntityName: "Shop", into: managedContext) as! Shop
+                shop.name = "No shop";
+                shop.id = max;
+                do {
+                    try managedContext.save()
+                    shops.append(shop)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
         return true
     }
 
