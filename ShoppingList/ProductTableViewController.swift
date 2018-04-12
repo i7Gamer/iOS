@@ -32,11 +32,9 @@ class ProductTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
         
-        print(shopId)
         // load data
         do {
             items = try managedContext.fetch(fetchRequest)
-            print(items.count)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
