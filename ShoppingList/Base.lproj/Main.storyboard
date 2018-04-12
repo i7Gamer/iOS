@@ -72,22 +72,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSy-7X-8O7">
-                                <rect key="frame" x="28" y="218" width="91" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSy-7X-8O7">
+                                <rect key="frame" x="28" y="323" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wia-C0-SUo">
-                                <rect key="frame" x="139" y="213" width="202" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter shop name here...." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wia-C0-SUo">
+                                <rect key="frame" x="143" y="318.5" width="196" height="30"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="centerY" secondItem="Wia-C0-SUo" secondAttribute="centerY" id="RBl-zn-wRo"/>
+                            <constraint firstItem="Wia-C0-SUo" firstAttribute="leading" secondItem="LSy-7X-8O7" secondAttribute="trailing" constant="25" id="RuA-xY-SME"/>
+                            <constraint firstItem="sTZ-lN-uqF" firstAttribute="trailing" secondItem="Wia-C0-SUo" secondAttribute="trailing" constant="36" id="WOD-H0-508"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="centerY" secondItem="OfJ-Zf-pl8" secondAttribute="centerY" id="beM-FX-TbA"/>
+                            <constraint firstItem="LSy-7X-8O7" firstAttribute="leading" secondItem="sTZ-lN-uqF" secondAttribute="leading" constant="28" id="wkR-Tu-nbi"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="sTZ-lN-uqF"/>
                     </view>
                     <navigationItem key="navigationItem" id="bse-xc-TLt">
