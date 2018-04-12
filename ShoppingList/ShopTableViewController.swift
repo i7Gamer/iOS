@@ -110,6 +110,7 @@ class ShopTableViewController: UITableViewController {
             
             let shop = NSEntityDescription.insertNewObject(forEntityName: "Shop", into: managedContext) as! Shop
             shop.name = svc.shopName.text
+            shop.address = svc.shopAddress.text
             shop.id = max;
             do {
                 try managedContext.save()

@@ -12,6 +12,7 @@ class AddShopViewController: UIViewController {
 
     @IBOutlet weak var cancelBtn: UIBarButtonItem!
     @IBOutlet weak var shopName: UITextField!
+    @IBOutlet weak var shopAddress: UITextField!
     @IBOutlet weak var saveBtn: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()

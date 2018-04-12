@@ -91,7 +91,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter address here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axe-MQ-fcM">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter address here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="axe-MQ-fcM">
                                 <rect key="frame" x="145" y="318" width="189" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -132,6 +132,7 @@
                     <connections>
                         <outlet property="cancelBtn" destination="rla-EP-ei6" id="zdZ-NJ-Zu2"/>
                         <outlet property="saveBtn" destination="j28-m6-rcK" id="jtL-XZ-rG5"/>
+                        <outlet property="shopAddress" destination="axe-MQ-fcM" id="ajF-W2-K9K"/>
                         <outlet property="shopName" destination="Wia-C0-SUo" id="aUw-9W-xdW"/>
                     </connections>
                 </viewController>
