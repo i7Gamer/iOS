@@ -82,6 +82,7 @@
                                 <rect key="frame" x="143" y="318.5" width="196" height="30"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
@@ -251,7 +252,7 @@
                         <viewLayoutGuide key="safeArea" id="0Nd-9A-p1p"/>
                     </view>
                     <navigationItem key="navigationItem" id="33a-KN-lpd">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="7pU-dz-tZl">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7pU-dz-tZl">
                             <connections>
                                 <segue destination="8i4-WD-6zl" kind="unwind" unwindAction="cancelAddProduct:" id="Wec-gq-F1S"/>
                             </connections>
