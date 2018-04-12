@@ -88,9 +88,11 @@ class ProductTableViewController: UITableViewController {
                 max = max + 1
                 
                 let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
-                item.name = svc.productName.text
                 item.id = max;
+                item.name = svc.productName.text
                 item.shopId = shopId;
+                item.amount = svc.productAmount.text
+                item.desc = svc.productDescription.text
                 
                 do {
                     try managedContext.save()
