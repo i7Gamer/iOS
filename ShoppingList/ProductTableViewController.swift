@@ -69,6 +69,7 @@ class ProductTableViewController: UITableViewController {
         let item = items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
         cell.textLabel?.text = item.value(forKeyPath: "name") as? String
+        cell.detailTextLabel?.text = item.value(forKeyPath: "amount") as? String
         return cell
     }
     
