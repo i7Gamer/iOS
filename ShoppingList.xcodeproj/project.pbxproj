@@ -8,20 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		7C9BC3E520762A75002EE66E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9BC3E420762A75002EE66E /* CoreData.framework */; };
+		7C9BC40820764A99002EE66E /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BC40720764A99002EE66E /* ProductTableViewController.swift */; };
+		7C9BC40A207657AC002EE66E /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BC409207657AC002EE66E /* AddProductViewController.swift */; };
 		7CCD04DB206CEDF400FDE9AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DA206CEDF400FDE9AC /* AppDelegate.swift */; };
 		7CCD04DD206CEDF400FDE9AC /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DC206CEDF400FDE9AC /* FirstViewController.swift */; };
 		7CCD04DF206CEDF400FDE9AC /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DE206CEDF400FDE9AC /* SecondViewController.swift */; };
 		7CCD04E2206CEDF400FDE9AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CCD04E0206CEDF400FDE9AC /* Main.storyboard */; };
 		7CCD04E4206CEDF400FDE9AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CCD04E3206CEDF400FDE9AC /* Assets.xcassets */; };
 		7CCD04E7206CEDF400FDE9AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CCD04E5206CEDF400FDE9AC /* LaunchScreen.storyboard */; };
-		7CCD04F3206CF5F800FDE9AC /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04F2206CF5F800FDE9AC /* TableViewController.swift */; };
-		7CCD04F9206CF92300FDE9AC /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04F8206CF92300FDE9AC /* TableViewCell.swift */; };
+		7CCD04F3206CF5F800FDE9AC /* ShopTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04F2206CF5F800FDE9AC /* ShopTableViewController.swift */; };
 		7CCD04FC206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04FA206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld */; };
 		7CCD04FE206D15D200FDE9AC /* AddShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04FD206D15D200FDE9AC /* AddShopViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7C9BC3E420762A75002EE66E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7C9BC40720764A99002EE66E /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
+		7C9BC409207657AC002EE66E /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 		7CCD04D7206CEDF400FDE9AC /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CCD04DA206CEDF400FDE9AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CCD04DC206CEDF400FDE9AC /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -30,8 +33,7 @@
 		7CCD04E3206CEDF400FDE9AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CCD04E6206CEDF400FDE9AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7CCD04E8206CEDF400FDE9AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CCD04F2206CF5F800FDE9AC /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		7CCD04F8206CF92300FDE9AC /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		7CCD04F2206CF5F800FDE9AC /* ShopTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTableViewController.swift; sourceTree = "<group>"; };
 		7CCD04FB206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingListDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7CCD04FD206D15D200FDE9AC /* AddShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShopViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,10 +85,11 @@
 				7CCD04E3206CEDF400FDE9AC /* Assets.xcassets */,
 				7CCD04E5206CEDF400FDE9AC /* LaunchScreen.storyboard */,
 				7CCD04E8206CEDF400FDE9AC /* Info.plist */,
-				7CCD04F2206CF5F800FDE9AC /* TableViewController.swift */,
-				7CCD04F8206CF92300FDE9AC /* TableViewCell.swift */,
+				7CCD04F2206CF5F800FDE9AC /* ShopTableViewController.swift */,
 				7CCD04FA206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld */,
 				7CCD04FD206D15D200FDE9AC /* AddShopViewController.swift */,
+				7C9BC40720764A99002EE66E /* ProductTableViewController.swift */,
+				7C9BC409207657AC002EE66E /* AddProductViewController.swift */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -164,12 +167,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CCD04FE206D15D200FDE9AC /* AddShopViewController.swift in Sources */,
-				7CCD04F9206CF92300FDE9AC /* TableViewCell.swift in Sources */,
 				7CCD04DF206CEDF400FDE9AC /* SecondViewController.swift in Sources */,
+				7C9BC40A207657AC002EE66E /* AddProductViewController.swift in Sources */,
 				7CCD04DB206CEDF400FDE9AC /* AppDelegate.swift in Sources */,
 				7CCD04FC206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld in Sources */,
 				7CCD04DD206CEDF400FDE9AC /* FirstViewController.swift in Sources */,
-				7CCD04F3206CF5F800FDE9AC /* TableViewController.swift in Sources */,
+				7C9BC40820764A99002EE66E /* ProductTableViewController.swift in Sources */,
+				7CCD04F3206CF5F800FDE9AC /* ShopTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

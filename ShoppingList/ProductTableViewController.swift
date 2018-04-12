@@ -1,62 +1,33 @@
 //
-//  TableViewController.swift
+//  ProductTableViewController.swift
 //  ShoppingList
 //
-//  Created by Timo Rzipa on 29.03.18.
+//  Created by Timo Rzipa on 05.04.18.
 //  Copyright © 2018 Timo Rzipa. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class TableViewController: UITableViewController {
+class ProductTableViewController: UITableViewController {
 
-    var shops: [NSManagedObject] = []
+    var items: [Item] = []
     
+    public var shopId : Int16 = 0
+    public var shopName : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Shopping List"
         
+        self.navigationItem.largeTitleDisplayMode = UINavigationItem.LargeTitleDisplayMode.never;
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addProduct(sender:)))
+        title = "Products for " + shopName
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // get app delegate
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
-        let managedContext = appDelegate.persistentContainer.viewContext
-        // request
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Shop")
-        // load data
-        do {
-            shops = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-    }
-    
-    //func tableView(UITableView, didDeselectRowAt: IndexPath)
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let row = indexPath.row
-        print(row)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "ItemViewController") as! UITableViewController
-        navigationController?.pushViewController(destination, animated: true)
-        
-        
-        //let shoppingListViewController = self.storyboard?.instantiateViewController(withIdentifier: "ItemViewController") as! SecondViewController
-        
-        //self.navigationController?.pushViewController(shoppingListViewController, animated: true)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,46 +39,62 @@ class TableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return shops.count
+        return 0
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let shop = shops[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewcell", for: indexPath)
-        cell.textLabel?.text = shop.value(forKeyPath: "name") as? String
-        return cell
+    
+    @objc func addProduct(sender: Any?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! AddProductViewController
+        
+        self.present(destination, animated: true, completion: nil)
     }
- 
-    @IBAction func saveShop(_ segue:UIStoryboardSegue){
-        if let svc = segue.source as? AddShopViewController {
-            UserDefaults.standard.set(svc.shopName.text, forKey: "shopName")
-            
-            // TODO in db speichern
+    
+    @IBAction func saveProduct(_ segue:UIStoryboardSegue){
+        if let svc = segue.source as? AddProductViewController {
             
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             let managedContext = appDelegate.persistentContainer.viewContext
-            let shop = NSEntityDescription.insertNewObject(forEntityName: "Shop", into: managedContext) as! Shop
-            shop.name = svc.shopName.text
             
+            var max : Int16 = 0;
+            
+            for item in items{
+                if(item.id > max){
+                    max = item.id
+                }
+            }
+            max = max + 1
+            
+            let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
+            item.name = svc.productName.text
+            item.id = max;
             do {
                 try managedContext.save()
-                shops.append(shop)
+                items.append(item)
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
             
             self.tableView.reloadData()
-            
         }
     }
     
-    @IBAction func cancelAddShop(_ segue:UIStoryboardSegue){
+    @IBAction func cancelAddProduct(_ segue:UIStoryboardSegue){
     }
+
+    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
+        return cell
+    }
+    */
 
     /*
     // Override to support conditional editing of the table view.

@@ -13,7 +13,7 @@
         <!--Shopping List-->
         <scene sceneID="eDB-S9-WaP">
             <objects>
-                <tableViewController id="G5G-ZE-Ner" customClass="TableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="G5G-ZE-Ner" customClass="ShopTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lcj-11-XUQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -166,34 +166,79 @@
             </objects>
             <point key="canvasLocation" x="500" y="310"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Product Table View Controller-->
         <scene sceneID="DjD-xX-0p3">
             <objects>
-                <tableViewController storyboardIdentifier="ItemViewController" id="d7n-c4-c3e" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ItemViewController" id="d7n-c4-c3e" customClass="ProductTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="73y-5K-oXV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="JWB-a4-p3F">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JWB-a4-p3F" id="wlC-vb-1mW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="d7n-c4-c3e" id="yk4-nh-d5a"/>
                             <outlet property="delegate" destination="d7n-c4-c3e" id="HM2-my-Lhf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="7xH-vJ-GLz"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NT3-Mz-ygZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationBar contentMode="scaleToFill" id="ACj-uU-aIA">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <navigationItem title="Title" id="66X-Dx-lA5">
+                            <barButtonItem key="rightBarButtonItem" systemItem="add" id="7at-vf-w3z"/>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
             </objects>
             <point key="canvasLocation" x="2065" y="-1196"/>
+        </scene>
+        <!--Add Product View Controller-->
+        <scene sceneID="TAi-Iw-aMM">
+            <objects>
+                <viewController storyboardIdentifier="AddProductViewController" id="wER-KQ-TaM" customClass="AddProductViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EYT-GJ-OaP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Ui-E1-kKK">
+                                <rect key="frame" x="157" y="217" width="202" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvd-uv-8ak">
+                                <rect key="frame" x="16" y="222" width="133" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="0Nd-9A-p1p"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="J2n-vo-P7t">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FxY-cf-M2k">
+                            <connections>
+                                <segue destination="8i4-WD-6zl" kind="unwind" unwindAction="cancelAddProduct:" id="Tfz-VZ-fcw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="rfc-6u-gh9">
+                            <connections>
+                                <segue destination="8i4-WD-6zl" kind="unwind" unwindAction="saveProduct:" id="rqE-N9-FHR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="productName" destination="7Ui-E1-kKK" id="bLf-4T-tyu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ScU-nx-SyA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8i4-WD-6zl" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2840.8000000000002" y="-1197.7511244377813"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="q0Z-nh-Ger">
