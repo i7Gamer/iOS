@@ -291,10 +291,10 @@
             </objects>
             <point key="canvasLocation" x="2768.8000000000002" y="346.77661169415296"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Template Item Table View Controller-->
         <scene sceneID="45e-ed-jQG">
             <objects>
-                <tableViewController storyboardIdentifier="TemplateitemController" id="XR4-ZX-goZ" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TemplateItemController" id="XR4-ZX-goZ" customClass="TemplateItemTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vwk-Vh-7bf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

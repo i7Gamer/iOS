@@ -15,7 +15,7 @@ class TemplateTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Templates"
+        title = "Vorlagen"
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -32,23 +32,20 @@ class TemplateTableViewController: UITableViewController {
         }
     }
     
-    /*
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "TemplateItemController") as! TemplateTableViewController
+        let destination = storyboard.instantiateViewController(withIdentifier: "TemplateItemController") as! TemplateItemTableViewController
         let template = templates[indexPath.row];
         
         destination.templateId = (template.value(forKeyPath: "id") as? Int16)!
-        
         destination.templateName = (template.value(forKeyPath: "name") as? String)!
         
         navigationController?.pushViewController(destination, animated: true)
-        
     }
-    */
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -73,7 +70,6 @@ class TemplateTableViewController: UITableViewController {
         return true
     }
     
-    /*
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -84,8 +80,6 @@ class TemplateTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-    */
-    
     
     @IBAction func saveTemplate(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? AddTemplateViewController {
