@@ -67,8 +67,35 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
-        cell.textLabel?.text = item.value(forKeyPath: "name") as? String
-        cell.detailTextLabel?.text = item.value(forKeyPath: "amount") as? String
+        
+        let name = item.value(forKeyPath: "name") as! String
+        var amount = item.value(forKeyPath: "amount") as! String
+        let desc = item.value(forKeyPath: "desc") as! String
+        var dateString = ""
+        
+        // FUCK THIS SHIT // impossible // always false even if empty
+        if(amount.isEmpty){
+            amount = amount + " ";
+        }
+        else{
+            amount = amount + " ";
+        }
+        
+        // date to string
+        if let date = item.value(forKeyPath: "dueDate") as? Date {
+            let formatter = DateFormatter()
+            formatter.dateStyle = DateFormatter.Style.long
+            formatter.timeStyle = .medium
+            dateString = formatter.string(from: date)
+            
+            cell.textLabel?.text = amount + name
+            cell.detailTextLabel?.text = "Fällig bis: " + dateString + " | " + desc
+        }
+        else{
+            cell.textLabel?.text = amount + name
+            cell.detailTextLabel?.text = desc
+        }
+        
         return cell
     }
     
