@@ -13,7 +13,9 @@ class AddProductViewController: UIViewController {
     @IBOutlet weak var productName: UITextField!
     @IBOutlet weak var productAmount: UITextField!
     @IBOutlet weak var productDescription: UITextField!
-
+    @IBOutlet weak var productShopPicker: UIPickerView!
+    @IBOutlet weak var productDatePicker: UIDatePicker!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -22,6 +24,8 @@ class AddProductViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     /*
     // MARK: - Navigation
