@@ -67,8 +67,33 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
-        cell.textLabel?.text = item.value(forKeyPath: "name") as? String
-        cell.detailTextLabel?.text = item.value(forKeyPath: "amount") as? String
+        
+        let name = item.value(forKeyPath: "name") as! String
+        let desc = item.value(forKeyPath: "desc") as! String
+        var dateString = ""
+        var amountString = ""
+        
+        if let amount = item.value(forKeyPath: "amount") as? String {
+            if amount.count > 1 {
+                amountString = amount + " "
+            }
+        }
+        
+        // date to string
+        if let date = item.value(forKeyPath: "dueDate") as? Date {
+            let formatter = DateFormatter()
+            formatter.dateStyle = DateFormatter.Style.long
+            formatter.timeStyle = .medium
+            dateString = formatter.string(from: date)
+            
+            cell.textLabel?.text = amountString + name
+            cell.detailTextLabel?.text = "Fällig bis: " + dateString + " | " + desc
+        }
+        else{
+            cell.textLabel?.text = amountString + name
+            cell.detailTextLabel?.text = desc
+        }
+        
         return cell
     }
     
@@ -126,6 +151,43 @@ class ProductTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
+        
+        [UITableViewRowAction]? {
+        let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+            self.buyItem(indexPath: indexPath)
+        }
+        bought.backgroundColor = .green
+        
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            self.editItem(indexPath: indexPath)
+        }
+        edit.backgroundColor = .orange
+        
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+            self.deleteItem(indexPath: indexPath)
+        }
+        delete.backgroundColor = .red
+        
+        return [delete, edit ,bought]
+    }
+    
+    func deleteItem(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let item = items[indexPath.row]
+        managedContext.delete(item);
+        items.remove(at: indexPath.row)
+        self.tableView.reloadData()
+    }
+    
+    func buyItem(indexPath : IndexPath){
+        print("buy item tapped")
+    }
+    
+    func editItem(indexPath : IndexPath){
+        print("edit item tapped")
+    }
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
