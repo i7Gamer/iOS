@@ -69,16 +69,14 @@ class ProductTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
         
         let name = item.value(forKeyPath: "name") as! String
-        var amount = item.value(forKeyPath: "amount") as! String
         let desc = item.value(forKeyPath: "desc") as! String
         var dateString = ""
+        var amountString = ""
         
-        // FUCK THIS SHIT // impossible // always false even if empty
-        if(amount.isEmpty){
-            amount = amount + " ";
-        }
-        else{
-            amount = amount + " ";
+        if let amount = item.value(forKeyPath: "amount") as? String {
+            if amount.count > 1 {
+                amountString = amount + " "
+            }
         }
         
         // date to string
@@ -88,11 +86,11 @@ class ProductTableViewController: UITableViewController {
             formatter.timeStyle = .medium
             dateString = formatter.string(from: date)
             
-            cell.textLabel?.text = amount + name
+            cell.textLabel?.text = amountString + name
             cell.detailTextLabel?.text = "Fällig bis: " + dateString + " | " + desc
         }
         else{
-            cell.textLabel?.text = amount + name
+            cell.textLabel?.text = amountString + name
             cell.detailTextLabel?.text = desc
         }
         
@@ -150,7 +148,6 @@ class ProductTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-    
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
