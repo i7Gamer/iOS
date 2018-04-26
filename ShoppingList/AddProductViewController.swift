@@ -18,12 +18,16 @@ class AddProductViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     
     
@@ -36,5 +40,18 @@ class AddProductViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // delegate wie bei tableview machen, noch einmal nachfragen
+    
+    // func view(forRow: Int, forComponent: Int)
+
+
+    
+    
+    // return shop to store in db
+    func pickerView(_ pickerView: UIPickerView, didSelectRow: Int, inComponent: Int) {
+        
+    }
+
 
 }
