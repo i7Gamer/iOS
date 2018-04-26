@@ -149,6 +149,44 @@ class ProductTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
+        
+        [UITableViewRowAction]? {
+        let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+            self.buyItem(indexPath: indexPath)
+        }
+        bought.backgroundColor = .green
+        
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            self.editItem(indexPath: indexPath)
+        }
+        edit.backgroundColor = .orange
+        
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+            self.deleteItem(indexPath: indexPath)
+        }
+        delete.backgroundColor = .red
+        
+        return [delete, edit ,bought]
+    }
+    
+    func deleteItem(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let item = items[indexPath.row]
+        managedContext.delete(item);
+        items.remove(at: indexPath.row)
+        self.tableView.reloadData()
+    }
+    
+    func buyItem(indexPath : IndexPath){
+        print("buy item tapped")
+    }
+    
+    func editItem(indexPath : IndexPath){
+        print("edit item tapped")
+    }
+    
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
