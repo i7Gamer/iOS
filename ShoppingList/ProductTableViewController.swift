@@ -119,7 +119,7 @@ class ProductTableViewController: UITableViewController {
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
 //                item.shop = svc.productShopPicker.
-//                item.dueDate = svc.productDatePicker.date
+                item.dueDate = svc.productDatePicker.date
                 
                 do {
                     try managedContext.save()
@@ -183,6 +183,15 @@ class ProductTableViewController: UITableViewController {
     
     func buyItem(indexPath : IndexPath){
         print("buy item tapped")
+        
+        // try to add buy button but does not work
+        
+        let bottomOffset = self.navigationController!.navigationBar.frame.height +  (self.tabBarController?.tabBar.frame.size.height)! as CGFloat
+        
+        let yourButton = UIButton(frame: CGRect(x:0, y:0, width:50, height:50))
+        yourButton.backgroundColor = UIColor.red
+        yourButton.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - yourButton.frame.size.height - bottomOffset)
+        view.addSubview(yourButton)
     }
     
     func editItem(indexPath : IndexPath){
