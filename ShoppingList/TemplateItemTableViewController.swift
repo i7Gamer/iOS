@@ -38,13 +38,6 @@ class TemplateItemTableViewController: UITableViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    
-    @objc func addTemplateItem(sender: Any?) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "AddTemplateItemController") as! UINavigationController
-        
-        self.present(destination, animated: true, completion: nil)
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -53,10 +46,144 @@ class TemplateItemTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return templateItems.count
     }
+    
+    @objc func addTemplateItem(sender: Any?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "AddTemplateItemController") as! UINavigationController
+        
+        self.present(destination, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveTemplateItem(_ segue:UIStoryboardSegue){
+        if let svc = segue.source as? AddTemplateItemController {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            var max : Int16 = 0;
+            
+            for item in templateItems{
+                if(item.id > max){
+                    max = item.id
+                }
+            }
+            max = max + 1
+            
+            let templateItem = NSEntityDescription.insertNewObject(forEntityName: "TemplateItem", into: managedContext) as! TemplateItem
+            templateItem.id = max;
+            templateItem.name = svc.templateItemName.text
+            templateItem.desc = svc.templateItemDescription.text;
+            templateItem.amount = svc.templateItemAmount.text;
+            templateItem.templateId = templateId;
+            
+            do {
+                try managedContext.save()
+                templateItems.append(templateItem)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    @IBAction func cancelAddTemplateItem(_ segue:UIStoryboardSegue){
+    }
+/*
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = items[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
+        
+        let name = item.value(forKeyPath: "name") as! String
+        let desc = item.value(forKeyPath: "desc") as! String
+        var dateString = ""
+        var amountString = ""
+        
+        if let amount = item.value(forKeyPath: "amount") as? String {
+            if amount.count > 1 {
+                amountString = amount + " "
+            }
+        }
+        
+        // date to string
+        if let date = item.value(forKeyPath: "dueDate") as? Date {
+            let formatter = DateFormatter()
+            formatter.dateStyle = DateFormatter.Style.long
+            formatter.timeStyle = .medium
+            dateString = formatter.string(from: date)
+            
+            cell.textLabel?.text = amountString + name
+            cell.detailTextLabel?.text = "Fällig bis: " + dateString + " | " + desc
+        }
+        else{
+            cell.textLabel?.text = amountString + name
+            cell.detailTextLabel?.text = desc
+        }
+        
+        return cell
+    }
+    
+    
+    
+
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let item = items[indexPath.row]
+            managedContext.delete(item);
+            items.remove(at: indexPath.row)
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
+        
+        [UITableViewRowAction]? {
+            let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+                self.buyItem(indexPath: indexPath)
+            }
+            bought.backgroundColor = .green
+            
+            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+                self.editItem(indexPath: indexPath)
+            }
+            edit.backgroundColor = .orange
+            
+            let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+                self.deleteItem(indexPath: indexPath)
+            }
+            delete.backgroundColor = .red
+            
+            return [delete, edit ,bought]
+    }
+    
+    func deleteItem(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let item = items[indexPath.row]
+        managedContext.delete(item);
+        items.remove(at: indexPath.row)
+        self.tableView.reloadData()
+    }
+    
+    func buyItem(indexPath : IndexPath){
+        print("buy item tapped")
+    }
+    
+    func editItem(indexPath : IndexPath){
+        print("edit item tapped")
+    }
+    */
 }

@@ -10,6 +10,10 @@ import UIKit
 
 class AddTemplateItemController: UIViewController {
 
+    @IBOutlet weak var templateItemName: UITextField!
+    @IBOutlet weak var templateItemAmount: UITextField!
+    @IBOutlet weak var templateItemDescription: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
