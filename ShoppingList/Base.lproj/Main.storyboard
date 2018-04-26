@@ -335,7 +335,7 @@
             </objects>
             <point key="canvasLocation" x="2777" y="1120"/>
         </scene>
-        <!--View Controller-->
+        <!--Add a template item-->
         <scene sceneID="6gd-21-Tje">
             <objects>
                 <viewController id="xjd-ff-cyX" sceneMemberID="viewController">
@@ -403,7 +403,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uiT-L8-9o2"/>
                     </view>
-                    <navigationItem key="navigationItem" id="rrd-O7-ILR">
+                    <navigationItem key="navigationItem" title="Add a template item" id="rrd-O7-ILR">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="tbZ-mP-IxO"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ZwX-0R-VgK"/>
                     </navigationItem>
