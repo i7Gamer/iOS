@@ -20,7 +20,7 @@ class TemplateItemTableViewController: UITableViewController {
         self.navigationItem.largeTitleDisplayMode = UINavigationItem.LargeTitleDisplayMode.never;
         
         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTemplateItem(sender:)))
-        title = "Ingredients for " + templateName
+        title = templateName
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
