@@ -119,7 +119,7 @@ class ProductTableViewController: UITableViewController {
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
 //                item.shop = svc.productShopPicker.
-//                item.dueDate = svc.productDatePicker.date
+                item.dueDate = svc.productDatePicker.date
                 
                 do {
                     try managedContext.save()
