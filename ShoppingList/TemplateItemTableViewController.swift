@@ -19,7 +19,7 @@ class TemplateItemTableViewController: UITableViewController {
         
         self.navigationItem.largeTitleDisplayMode = UINavigationItem.LargeTitleDisplayMode.never;
         
-        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTemplateItem(sender:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTemplateItem(sender:)))
         title = templateName
         
         // get app delegate
@@ -37,6 +37,13 @@ class TemplateItemTableViewController: UITableViewController {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+    }
+    
+    @objc func addTemplateItem(sender: Any?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "AddTemplateItemController") as! UINavigationController
+        
+        self.present(destination, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
