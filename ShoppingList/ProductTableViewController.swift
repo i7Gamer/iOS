@@ -32,8 +32,7 @@ class ProductTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
-        fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
-        fetchRequest.predicate = NSPredicate(format: "purchaseId == 0")
+        fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String.init(shopId))
         
         // load data
         do {
@@ -59,9 +58,13 @@ class ProductTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
             return items.count;
-            
         }
-        return 1;
+        if(boughtItems.count > 0){
+            return 1
+        }
+        else {
+            return 0
+        }
     }
     
     @objc func addProduct(sender: Any?) {
