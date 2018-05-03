@@ -51,12 +51,16 @@ class ProductTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return items.count;
+        if section == 0 {
+            return items.count;
+            
+        }
+        return 1;
     }
     
     @objc func addProduct(sender: Any?) {
@@ -67,6 +71,7 @@ class ProductTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
         let item = items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
         
@@ -95,8 +100,17 @@ class ProductTableViewController: UITableViewController {
             cell.textLabel?.text = amountString + name
             cell.detailTextLabel?.text = desc
         }
+            
+        if(boughtItems.contains(item)){
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+        }
         
         return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "finishPurchaseButtonCell", for: indexPath)
+            cell.textLabel?.text = "Finish Purchase"
+            return cell;
+        }
     }
     
     @IBAction func saveProduct(_ segue:UIStoryboardSegue){
@@ -197,13 +211,7 @@ class ProductTableViewController: UITableViewController {
         let item = items[indexPath.row]
         boughtItems.append(item)
         
-        // try to add buy button but does not work
-        let bottomOffset = self.navigationController!.navigationBar.frame.height +  (self.tabBarController?.tabBar.frame.size.height)! as CGFloat
-        
-        let yourButton = UIButton(frame: CGRect(x:0, y:0, width:50, height:50))
-        yourButton.backgroundColor = UIColor.red
-        yourButton.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - yourButton.frame.size.height - bottomOffset)
-        view.addSubview(yourButton)
+        self.tableView.reloadData()
     }
     
     func editItem(indexPath : IndexPath){
