@@ -13,6 +13,8 @@ class ProductTableViewController: UITableViewController {
 
     var items: [Item] = []
     
+    var boughtItems: [Item] = []
+    
     public var shopId : Int16 = 0
     public var shopName : String = ""
     override func viewDidLoad() {
@@ -118,7 +120,7 @@ class ProductTableViewController: UITableViewController {
                 item.shopId = shopId;
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
-//                item.shop = svc.productShopPicker.
+                //item.shop = svc.productShopPicker.
                 item.dueDate = svc.productDatePicker.date
                 
                 do {
@@ -152,24 +154,31 @@ class ProductTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
-        
         [UITableViewRowAction]? {
-        let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
-            self.buyItem(indexPath: indexPath)
-        }
-        bought.backgroundColor = .green
-        
-        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-            self.editItem(indexPath: indexPath)
-        }
-        edit.backgroundColor = .orange
-        
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-            self.deleteItem(indexPath: indexPath)
-        }
-        delete.backgroundColor = .red
-        
-        return [delete, edit ,bought]
+            // check if product has already been marked bought, if already bought dont show buttons
+            let item = items[indexPath.row]
+            if(!boughtItems.contains(item)){
+            
+                let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+                    self.buyItem(indexPath: indexPath)
+                }
+                bought.backgroundColor = .green
+                
+                let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+                    self.editItem(indexPath: indexPath)
+                }
+                edit.backgroundColor = .orange
+                
+                let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+                    self.deleteItem(indexPath: indexPath)
+                }
+                delete.backgroundColor = .red
+                
+                return [delete, edit ,bought]
+            }
+            else{
+                return []
+            }
     }
     
     func deleteItem(indexPath : IndexPath){
@@ -182,10 +191,13 @@ class ProductTableViewController: UITableViewController {
     }
     
     func buyItem(indexPath : IndexPath){
-        print("buy item tapped")
+        print("bought item tapped")
+        
+        // add item to bought list
+        let item = items[indexPath.row]
+        boughtItems.append(item)
         
         // try to add buy button but does not work
-        
         let bottomOffset = self.navigationController!.navigationBar.frame.height +  (self.tabBarController?.tabBar.frame.size.height)! as CGFloat
         
         let yourButton = UIButton(frame: CGRect(x:0, y:0, width:50, height:50))
