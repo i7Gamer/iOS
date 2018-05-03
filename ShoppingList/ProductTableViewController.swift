@@ -32,8 +32,7 @@ class ProductTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
-        fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
-        fetchRequest.predicate = NSPredicate(format: "purchaseId == 0")
+        fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String.init(shopId))
         
         // load data for items
         do {
@@ -60,9 +59,13 @@ class ProductTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
             return items.count;
-            
         }
-        return 1;
+        if(boughtItems.count > 0){
+            return 1
+        }
+        else {
+            return 0
+        }
     }
     
     @objc func addProduct(sender: Any?) {
@@ -244,17 +247,6 @@ class ProductTableViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let item = items[indexPath.row]
-            managedContext.delete(item);
-            items.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
         [UITableViewRowAction]? {
             // check if product has already been marked bought, if already bought dont show buttons
@@ -290,6 +282,12 @@ class ProductTableViewController: UITableViewController {
         managedContext.delete(item);
         items.remove(at: indexPath.row)
         self.tableView.reloadData()
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
     func buyItem(indexPath : IndexPath){
