@@ -13,6 +13,8 @@ class ProductTableViewController: UITableViewController {
 
     var items: [Item] = []
     
+    var boughtItems: [Item] = []
+    
     public var shopId : Int16 = 0
     public var shopName : String = ""
     override func viewDidLoad() {
@@ -31,6 +33,7 @@ class ProductTableViewController: UITableViewController {
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
+        fetchRequest.predicate = NSPredicate(format: "purchaseId == 0")
         
         // load data
         do {
@@ -49,12 +52,16 @@ class ProductTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return items.count;
+        if section == 0 {
+            return items.count;
+            
+        }
+        return 1;
     }
     
     @objc func addProduct(sender: Any?) {
@@ -65,7 +72,9 @@ class ProductTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
         let item = items[indexPath.row]
+            
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
         
         let name = item.value(forKeyPath: "name") as! String
@@ -74,7 +83,7 @@ class ProductTableViewController: UITableViewController {
         var amountString = ""
         
         if let amount = item.value(forKeyPath: "amount") as? String {
-            if amount.count > 1 {
+            if amount.count > 0 {
                 amountString = amount + " "
             }
         }
@@ -93,8 +102,90 @@ class ProductTableViewController: UITableViewController {
             cell.textLabel?.text = amountString + name
             cell.detailTextLabel?.text = desc
         }
+            
+        if(boughtItems.contains(item)){
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+        }
         
         return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "finishPurchaseButtonCell", for: indexPath)
+            cell.textLabel?.text = "Finish Purchase"
+            return cell;
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(indexPath.section == 0){
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+        else{
+            if(boughtItems.count > 0){
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let destination = storyboard.instantiateViewController(withIdentifier: "FinishPurchaseViewController") as! UINavigationController
+                
+                self.present(destination, animated: true, completion: nil)
+            }
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    @IBAction func finishPurchase(_ segue:UIStoryboardSegue){
+        if let svc = segue.source as? FinishPurchaseViewController {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            var purchases: [Purchase] = []
+            let fetchRequest = NSFetchRequest<Purchase>(entityName: "Purchase")
+            
+            // load data
+            do {
+                purchases = try managedContext.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+            
+            var max : Int16 = 0;
+            for p in purchases{
+                if(p.id > max){
+                    max = p.id
+                }
+            }
+            max = max + 1
+            
+            let purchase = NSEntityDescription.insertNewObject(forEntityName: "Purchase", into: managedContext) as! Purchase
+            purchase.id = max
+            purchase.total = Double(svc.total.text!)!
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            for i in boughtItems {
+                i.purchaseId = max;
+                i.setValue(max, forKey: "purchaseId")
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                items = items.filter { $0 != i}
+            }
+            
+            boughtItems = []
+            
+            print(max);
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    @IBAction func cancelPurchase(_ segue:UIStoryboardSegue){
     }
     
     @IBAction func saveProduct(_ segue:UIStoryboardSegue){
@@ -103,9 +194,19 @@ class ProductTableViewController: UITableViewController {
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 let managedContext = appDelegate.persistentContainer.viewContext
                 
+                var allItems: [Item] = []
+                let fetchRequest = NSFetchRequest<Item>(entityName: "Purchase")
+                
+                // load data
+                do {
+                    allItems = try managedContext.fetch(fetchRequest)
+                } catch let error as NSError {
+                    print("Could not fetch. \(error), \(error.userInfo)")
+                }
+                
                 var max : Int16 = 0;
                 
-                for item in items{
+                for item in allItems{
                     if(item.id > max){
                         max = item.id
                     }
@@ -118,7 +219,7 @@ class ProductTableViewController: UITableViewController {
                 item.shopId = shopId;
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
-//                item.shop = svc.productShopPicker.
+                //item.shop = svc.productShopPicker.
                 item.dueDate = svc.productDatePicker.date
                 
                 do {
@@ -152,24 +253,31 @@ class ProductTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
-        
         [UITableViewRowAction]? {
-        let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
-            self.buyItem(indexPath: indexPath)
-        }
-        bought.backgroundColor = .green
-        
-        let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-            self.editItem(indexPath: indexPath)
-        }
-        edit.backgroundColor = .orange
-        
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-            self.deleteItem(indexPath: indexPath)
-        }
-        delete.backgroundColor = .red
-        
-        return [delete, edit ,bought]
+            // check if product has already been marked bought, if already bought dont show buttons
+            let item = items[indexPath.row]
+            if(!boughtItems.contains(item)){
+            
+                let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+                    self.buyItem(indexPath: indexPath)
+                }
+                bought.backgroundColor = .green
+                
+                let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+                    self.editItem(indexPath: indexPath)
+                }
+                edit.backgroundColor = .orange
+                
+                let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+                    self.deleteItem(indexPath: indexPath)
+                }
+                delete.backgroundColor = .red
+                
+                return [delete, edit ,bought]
+            }
+            else{
+                return []
+            }
     }
     
     func deleteItem(indexPath : IndexPath){
@@ -182,16 +290,13 @@ class ProductTableViewController: UITableViewController {
     }
     
     func buyItem(indexPath : IndexPath){
-        print("buy item tapped")
+        print("bought item tapped")
         
-        // try to add buy button but does not work
+        // add item to bought list
+        let item = items[indexPath.row]
+        boughtItems.append(item)
         
-        let bottomOffset = self.navigationController!.navigationBar.frame.height +  (self.tabBarController?.tabBar.frame.size.height)! as CGFloat
-        
-        let yourButton = UIButton(frame: CGRect(x:0, y:0, width:50, height:50))
-        yourButton.backgroundColor = UIColor.red
-        yourButton.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - yourButton.frame.size.height - bottomOffset)
-        view.addSubview(yourButton)
+        self.tableView.reloadData()
     }
     
     func editItem(indexPath : IndexPath){
