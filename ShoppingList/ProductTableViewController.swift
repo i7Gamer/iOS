@@ -33,6 +33,7 @@ class ProductTableViewController: UITableViewController {
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
+        fetchRequest.predicate = NSPredicate(format: "purchaseId == 0")
         
         // load data
         do {
@@ -73,6 +74,7 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
         let item = items[indexPath.row]
+            
         let cell = tableView.dequeueReusableCell(withIdentifier: "productTableViewCell", for: indexPath)
         
         let name = item.value(forKeyPath: "name") as! String
@@ -81,7 +83,7 @@ class ProductTableViewController: UITableViewController {
         var amountString = ""
         
         if let amount = item.value(forKeyPath: "amount") as? String {
-            if amount.count > 1 {
+            if amount.count > 0 {
                 amountString = amount + " "
             }
         }
@@ -113,15 +115,98 @@ class ProductTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(indexPath.section == 0){
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+        else{
+            if(boughtItems.count > 0){
+                tableView.deselectRow(at: indexPath, animated: true)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let destination = storyboard.instantiateViewController(withIdentifier: "FinishPurchaseViewController") as! UINavigationController
+                
+                self.present(destination, animated: true, completion: nil)
+            }
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    @IBAction func finishPurchase(_ segue:UIStoryboardSegue){
+        if let svc = segue.source as? FinishPurchaseViewController {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            var purchases: [Purchase] = []
+            let fetchRequest = NSFetchRequest<Purchase>(entityName: "Purchase")
+            
+            // load data
+            do {
+                purchases = try managedContext.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+            
+            var max : Int16 = 0;
+            for p in purchases{
+                if(p.id > max){
+                    max = p.id
+                }
+            }
+            max = max + 1
+            
+            let purchase = NSEntityDescription.insertNewObject(forEntityName: "Purchase", into: managedContext) as! Purchase
+            purchase.id = max
+            purchase.total = Double(svc.total.text!)!
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            for i in boughtItems {
+                i.purchaseId = max;
+                i.setValue(max, forKey: "purchaseId")
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                items = items.filter { $0 != i}
+            }
+            
+            boughtItems = []
+            
+            print(max);
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    @IBAction func cancelPurchase(_ segue:UIStoryboardSegue){
+    }
+    
     @IBAction func saveProduct(_ segue:UIStoryboardSegue){
         //if let nav = segue.source as? UINavigationController {
             if let svc = segue.source as? AddProductViewController {
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 let managedContext = appDelegate.persistentContainer.viewContext
                 
+                var allItems: [Item] = []
+                let fetchRequest = NSFetchRequest<Item>(entityName: "Purchase")
+                
+                // load data
+                do {
+                    allItems = try managedContext.fetch(fetchRequest)
+                } catch let error as NSError {
+                    print("Could not fetch. \(error), \(error.userInfo)")
+                }
+                
                 var max : Int16 = 0;
                 
-                for item in items{
+                for item in allItems{
                     if(item.id > max){
                         max = item.id
                     }
