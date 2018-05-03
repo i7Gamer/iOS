@@ -79,7 +79,7 @@ class TemplateTableViewController: UITableViewController {
             templates.remove(at: indexPath.row)
             self.tableView.reloadData()
         }
-    }
+    }             
     
     @IBAction func saveTemplate(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? AddTemplateViewController {

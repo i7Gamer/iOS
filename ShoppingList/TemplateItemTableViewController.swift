@@ -87,17 +87,12 @@ class TemplateItemTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) -> [UITableViewRowAction]? {
-            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-                self.editItem(indexPath: indexPath)
-            }
-            edit.backgroundColor = .orange
-            
             let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
                 self.deleteItem(indexPath: indexPath)
             }
             delete.backgroundColor = .red
             
-            return [delete, edit]
+            return [delete]
     }
     
     func deleteItem(indexPath : IndexPath){
@@ -107,10 +102,6 @@ class TemplateItemTableViewController: UITableViewController {
         managedContext.delete(item);
         templateItems.remove(at: indexPath.row)
         self.tableView.reloadData()
-    }
-    
-    func editItem(indexPath : IndexPath){
-        print("edit item tapped")
     }
     
     @objc func addTemplateItem(sender: Any?) {
