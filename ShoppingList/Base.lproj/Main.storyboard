@@ -578,6 +578,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="pQo-ws-Lqb"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="wER-KQ-TaM" id="6L1-hu-lAj"/>
+                                    <outlet property="delegate" destination="wER-KQ-TaM" id="TWq-PV-hvX"/>
+                                </connections>
                             </pickerView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter description here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3NC-Il-kdw">
                                 <rect key="frame" x="144" y="414" width="197" height="30"/>
