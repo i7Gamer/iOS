@@ -98,24 +98,62 @@ class TemplateTableViewController: UITableViewController {
         let managedContext = appDelegate.persistentContainer.viewContext
         let template = templates[indexPath.row]
         
-        
-        //self.tableView.reloadData()
+        // load data
+        do {
+            let fetchRequest = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
+            fetchRequest.predicate = NSPredicate(format: "templateId == %@", String.init(template.id))
+            
+            let templateItems = try managedContext.fetch(fetchRequest)
+            
+            for templateItem in templateItems {
+                moveTemplateItemToShop(templateItem)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        self.tableView.reloadData()
     }
     
-    /*
-     // request
-     let fetchRequest = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
-     fetchRequest.predicate = NSPredicate(format: "templateId == %@", String.init(template.id))
-     
-     var templateItems
-     // load data
-     do {
-     var templateItems = try managedContext.fetch(fetchRequest)
-     } catch let error as NSError {
-     print("Could not fetch. \(error), \(error.userInfo)")
-     }
- 
- */
+    func moveTemplateItemToShop(_ templateItem : TemplateItem){
+        //if let nav = segue.source as? UINavigationController {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        var allItems: [Item] = []
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        
+        // load data
+        do {
+            allItems = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        var max : Int16 = 0;
+        
+        for item in allItems{
+            if(item.id > max){
+                max = item.id
+            }
+        }
+        max = max + 1
+        
+        let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
+        item.id = max;
+        item.name = templateItem.name
+        item.shopId = templateItem.shopId
+        item.amount = templateItem.amount
+        item.desc = templateItem.desc
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        self.tableView.reloadData()
+    }
     
     @IBAction func saveTemplate(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? AddTemplateViewController {
