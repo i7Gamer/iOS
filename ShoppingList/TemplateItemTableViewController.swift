@@ -147,13 +147,6 @@ class TemplateItemTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func moveItemTemplatesToShop(_ segue:UIStoryboardSegue){
-        
-    }
-    
     @IBAction func cancelAddTemplateItem(_ segue:UIStoryboardSegue){
-    }
-    
-    @IBAction func cancelMoveItemTemplatesToShop(_ segue:UIStoryboardSegue){
     }
 }
