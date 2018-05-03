@@ -94,8 +94,8 @@ class ProductTableViewController: UITableViewController {
         // date to string
         if let date = item.value(forKeyPath: "dueDate") as? Date {
             let formatter = DateFormatter()
-            formatter.dateStyle = DateFormatter.Style.long
-            formatter.timeStyle = .medium
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             dateString = formatter.string(from: date)
             
             cell.textLabel?.text = amountString + name
