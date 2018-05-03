@@ -14,6 +14,7 @@ class TemplateItemTableViewController: UITableViewController {
     
     public var templateId : Int16 = 0
     public var templateName : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +52,11 @@ class TemplateItemTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return templateItems.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        return cell
     }
     
     @objc func addTemplateItem(sender: Any?) {
