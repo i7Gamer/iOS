@@ -23,9 +23,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         do {
+            
+            // get all purchases
+            let fetchRequestPurchases = NSFetchRequest<Purchase>(entityName: "Purchase")
+            var purchases: [Purchase] = []
+            purchases = try managedContext.fetch(fetchRequestPurchases)
+            
+            var items: [Item] = []
+            let fetchRequestAllItems = NSFetchRequest<Item>(entityName: "Item")
+            items = try managedContext.fetch(fetchRequestAllItems)
+            
+            var templateItems: [TemplateItem] = []
+            let fetchRequestAllTemplateItems = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
+            templateItems = try managedContext.fetch(fetchRequestAllTemplateItems)
+            
+            for ti in templateItems{
+                print(ti.name! + " " + ti.desc! + " " + String(ti.shopId));
+            }
+            
+            // output all items with purchase id
+            for i in items{
+                print(i.name! + " " + i.desc! + " " + String(i.purchaseId));
+                //i.setValue(0, forKey: "purchaseId")
+                do {
+                    //try managedContext.save()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+            
+            // output all purchases with items
+            for p in purchases{
+                print(String(p.id) + " " + String(p.total))
+                for i in items{
+                    if(i.purchaseId == p.id){
+                        print(i.name! + " " + i.desc!);
+                    }
+                }
+                do {
+                    //try managedContext.delete(p)
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+            
             // get all shops
             let fetchRequestAll = NSFetchRequest<Shop>(entityName: "Shop")
             var shops = try managedContext.fetch(fetchRequestAll)
+            
+            for s in shops{
+                print(s.name! + " " + String(s.id))
+            }
             
             // get no shop
             let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
