@@ -125,12 +125,16 @@ class TemplateItemTableViewController: UITableViewController {
             }
             max = max + 1
             
+            let index = svc.shopPicker.selectedRow(inComponent: 0)
+            let shop = svc.shops[index]
+            
             let templateItem = NSEntityDescription.insertNewObject(forEntityName: "TemplateItem", into: managedContext) as! TemplateItem
-            templateItem.id = max;
+            templateItem.id = max
             templateItem.name = svc.templateItemName.text
-            templateItem.desc = svc.templateItemDescription.text;
-            templateItem.amount = svc.templateItemAmount.text;
-            templateItem.templateId = templateId;
+            templateItem.desc = svc.templateItemDescription.text
+            templateItem.amount = svc.templateItemAmount.text
+            templateItem.templateId = templateId
+            templateItem.shopId = shop.id
             
             do {
                 try managedContext.save()

@@ -33,6 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let fetchRequestAllItems = NSFetchRequest<Item>(entityName: "Item")
             items = try managedContext.fetch(fetchRequestAllItems)
             
+            var templateItems: [TemplateItem] = []
+            let fetchRequestAllTemplateItems = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
+            templateItems = try managedContext.fetch(fetchRequestAllTemplateItems)
+            
+            for ti in templateItems{
+                print(ti.name! + " " + ti.desc! + " " + String(ti.shopId));
+            }
+            
             // output all items with purchase id
             for i in items{
                 print(i.name! + " " + i.desc! + " " + String(i.purchaseId));
@@ -59,12 +67,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
             
-            
-            
-            
             // get all shops
             let fetchRequestAll = NSFetchRequest<Shop>(entityName: "Shop")
             var shops = try managedContext.fetch(fetchRequestAll)
+            
+            for s in shops{
+                print(s.name! + " " + String(s.id))
+            }
             
             // get no shop
             let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
