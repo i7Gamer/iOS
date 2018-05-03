@@ -17,7 +17,6 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var productShopPicker: UIPickerView!
     @IBOutlet weak var productDatePicker: UIDatePicker!
     
-    
     var shops: [Shop] = []
     
     override func viewDidLoad() {

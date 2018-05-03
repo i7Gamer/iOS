@@ -71,7 +71,6 @@ class ProductTableViewController: UITableViewController {
     @objc func addProduct(sender: Any?) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! UINavigationController
-        
         self.present(destination, animated: true, completion: nil)
     }
     
