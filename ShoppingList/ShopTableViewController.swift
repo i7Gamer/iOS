@@ -92,6 +92,11 @@ class ShopTableViewController: UITableViewController {
             let shop = shops[indexPath.row]
             managedContext.delete(shop);
             shops.remove(at: indexPath.row)
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
             self.tableView.reloadData()
         }
     }

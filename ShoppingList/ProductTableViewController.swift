@@ -241,17 +241,6 @@ class ProductTableViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let item = items[indexPath.row]
-            managedContext.delete(item);
-            items.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
         [UITableViewRowAction]? {
             // check if product has already been marked bought, if already bought dont show buttons
@@ -287,6 +276,12 @@ class ProductTableViewController: UITableViewController {
         managedContext.delete(item);
         items.remove(at: indexPath.row)
         self.tableView.reloadData()
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
     func buyItem(indexPath : IndexPath){
