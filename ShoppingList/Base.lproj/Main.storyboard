@@ -338,7 +338,7 @@
         <!--Add a template item-->
         <scene sceneID="6gd-21-Tje">
             <objects>
-                <viewController id="xjd-ff-cyX" sceneMemberID="viewController">
+                <viewController id="xjd-ff-cyX" customClass="AddTemplateItemController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nmm-DD-d6H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -404,11 +404,25 @@
                         <viewLayoutGuide key="safeArea" id="uiT-L8-9o2"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add a template item" id="rrd-O7-ILR">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="tbZ-mP-IxO"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ZwX-0R-VgK"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="tbZ-mP-IxO">
+                            <connections>
+                                <segue destination="lnL-DS-QK2" kind="unwind" unwindAction="cancelAddTemplateItem:" id="DG2-SG-Z3r"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ZwX-0R-VgK">
+                            <connections>
+                                <segue destination="lnL-DS-QK2" kind="unwind" unwindAction="saveTemplateItem:" id="ajg-Nc-euX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="templateItemAmount" destination="Ror-p2-dZT" id="eiy-Ct-GEJ"/>
+                        <outlet property="templateItemDescription" destination="Dgh-Pq-zHr" id="aWm-Td-BUH"/>
+                        <outlet property="templateItemName" destination="Ror-p2-dZT" id="bcx-F4-PkF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7jc-4S-RQ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lnL-DS-QK2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3616.8000000000002" y="1118.5907046476761"/>
         </scene>
@@ -564,6 +578,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="pQo-ws-Lqb"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="wER-KQ-TaM" id="6L1-hu-lAj"/>
+                                    <outlet property="delegate" destination="wER-KQ-TaM" id="TWq-PV-hvX"/>
+                                </connections>
                             </pickerView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter description here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3NC-Il-kdw">
                                 <rect key="frame" x="144" y="414" width="197" height="30"/>
