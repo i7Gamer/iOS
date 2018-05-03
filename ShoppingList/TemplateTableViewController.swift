@@ -70,16 +70,52 @@ class TemplateTableViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let template = templates[indexPath.row]
-            managedContext.delete(template);
-            templates.remove(at: indexPath.row)
-            self.tableView.reloadData()
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+            self.deleteItem(indexPath: indexPath)
         }
+        delete.backgroundColor = .red
+        
+        let moveToShop = UITableViewRowAction(style: .destructive, title: "Move to shop") { action, index in
+            self.moveTemplateItemsToShop(indexPath: indexPath)
+        }
+        moveToShop.backgroundColor = .green
+        
+        return [delete, moveToShop]
     }
+    
+    func deleteItem(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let template = templates[indexPath.row]
+        managedContext.delete(template);
+        templates.remove(at: indexPath.row)
+        self.tableView.reloadData()
+    }
+    
+    func moveTemplateItemsToShop(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let template = templates[indexPath.row]
+        
+        
+        //self.tableView.reloadData()
+    }
+    
+    /*
+     // request
+     let fetchRequest = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
+     fetchRequest.predicate = NSPredicate(format: "templateId == %@", String.init(template.id))
+     
+     var templateItems
+     // load data
+     do {
+     var templateItems = try managedContext.fetch(fetchRequest)
+     } catch let error as NSError {
+     print("Could not fetch. \(error), \(error.userInfo)")
+     }
+ 
+ */
     
     @IBAction func saveTemplate(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? AddTemplateViewController {

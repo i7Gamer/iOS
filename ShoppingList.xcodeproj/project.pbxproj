@@ -185,6 +185,7 @@
 				7CCD04DF206CEDF400FDE9AC /* SecondViewController.swift in Sources */,
 				431CED9F209202BF00910BC6 /* AddTemplateItemController.swift in Sources */,
 				7C9BC40A207657AC002EE66E /* AddProductViewController.swift in Sources */,
+				43C6B011209B334D005E6BF7 /* MoveTemplateItemsToShopViewController.swift in Sources */,
 				7CCD04DB206CEDF400FDE9AC /* AppDelegate.swift in Sources */,
 				431CED972091E10E00910BC6 /* TemplateTableViewController.swift in Sources */,
 				7CCD04FC206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld in Sources */,
