@@ -12,6 +12,7 @@ import CoreData
 class ProductTableViewController: UITableViewController {
 
     var items: [Item] = []
+    var shops: [Shop] = []
     
     public var shopId : Int16 = 0
     public var shopName : String = ""
@@ -28,16 +29,27 @@ class ProductTableViewController: UITableViewController {
         // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        // request
-        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
-        fetchRequest.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
+        // request for items
+        let fetchRequestItems = NSFetchRequest<Item>(entityName: "Item")
+        fetchRequestItems.predicate = NSPredicate(format: "shopId == %@", String.init(shopId))
         
-        // load data
+        // load data for items
         do {
-            items = try managedContext.fetch(fetchRequest)
+            items = try managedContext.fetch(fetchRequestItems)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        // request for shops
+        let fetchRequestShops = NSFetchRequest<Shop>(entityName: "Shop")
+        
+        // load data for shops
+        do {
+            shops = try managedContext.fetch(fetchRequestShops)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,13 +125,18 @@ class ProductTableViewController: UITableViewController {
                 max = max + 1
                 
                 let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
+                
+                let index = svc.productShopPicker.selectedRow(inComponent: 1)
+                
+                let shop = shops[index]
+                
                 item.id = max;
                 item.name = svc.productName.text
-                item.shopId = shopId;
+                item.shopId = shop.id
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
-//                item.shop = svc.productShopPicker.
                 item.dueDate = svc.productDatePicker.date
+                
                 
                 do {
                     try managedContext.save()
