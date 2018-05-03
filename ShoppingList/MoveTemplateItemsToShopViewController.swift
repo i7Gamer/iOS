@@ -10,10 +10,9 @@ import UIKit
 
 class MoveTemplateItemsToShopViewController: UIViewController {
 
-    @IBOutlet weak var ShopPickerView: UIPickerView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
 
     override func didReceiveMemoryWarning() {
