@@ -162,6 +162,7 @@ class ProductTableViewController: UITableViewController {
             let purchase = NSEntityDescription.insertNewObject(forEntityName: "Purchase", into: managedContext) as! Purchase
             purchase.id = max
             purchase.total = Double(svc.total.text!)!
+            purchase.date = Date.init()
             
             do {
                 try managedContext.save()
@@ -198,7 +199,7 @@ class ProductTableViewController: UITableViewController {
                 let managedContext = appDelegate.persistentContainer.viewContext
                 
                 var allItems: [Item] = []
-                let fetchRequest = NSFetchRequest<Item>(entityName: "Purchase")
+                let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
                 
                 // load data
                 do {
