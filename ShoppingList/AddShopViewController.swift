@@ -61,7 +61,6 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        
         if (textField === self.shopName) {
             for savedShop in shops {
                 if (shopName.text == savedShop.name) {
@@ -86,11 +85,11 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         print("prepare segue")
         
         
-    }
+    }*/
 }
