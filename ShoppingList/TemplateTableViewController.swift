@@ -15,7 +15,7 @@ class TemplateTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Vorlagen"
+        title = "Templates"
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -31,7 +31,6 @@ class TemplateTableViewController: UITableViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
