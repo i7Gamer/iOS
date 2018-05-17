@@ -17,16 +17,10 @@ class ShopTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: NSNotification.Name(rawValue: "reloadShops"), object: nil)
         
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
         fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
-        
-        // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -70,16 +64,10 @@ class ShopTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewcell", for: indexPath)
         
         var items: [Item] = []
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return cell}
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String(shop.id))
-        
-        // load data
         do {
             items = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -145,11 +133,7 @@ class ShopTableViewController: UITableViewController {
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if let nc = segue.destination as? UINavigationController {
             if let vc = nc.viewControllers.first as? AddShopViewController {
                 vc.shopController = self

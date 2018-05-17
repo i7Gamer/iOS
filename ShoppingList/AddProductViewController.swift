@@ -24,14 +24,10 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         self.productName.becomeFirstResponder()
         
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
         fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
-        // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -46,7 +42,6 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
             i = i + 1
         }
 
-        
         self.productShopPicker.delegate = self as UIPickerViewDelegate
         self.productShopPicker.dataSource = self as UIPickerViewDataSource
     }

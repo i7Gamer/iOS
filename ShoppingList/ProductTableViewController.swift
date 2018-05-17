@@ -24,16 +24,10 @@ class ProductTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addProduct(sender:)))
         title = "Products for " + shopName
         
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String.init(shopId))
-        
-        // load data for items
         do {
             items = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -88,7 +82,6 @@ class ProductTableViewController: UITableViewController {
             }
         }
         
-        // date to string
         if let date = item.value(forKeyPath: "dueDate") as? Date {
             let formatter = DateFormatter()
             formatter.dateStyle = .long
@@ -135,6 +128,78 @@ class ProductTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) -> [UITableViewRowAction]? {
+        let item = items[indexPath.row]
+        if(!boughtItems.contains(item)){
+            
+            let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+                self.buyItem(indexPath: indexPath)
+            }
+            bought.backgroundColor = .green
+            
+            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+                self.editItem(indexPath: indexPath)
+            }
+            edit.backgroundColor = .orange
+            
+            let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+                self.deleteItem(indexPath: indexPath)
+            }
+            delete.backgroundColor = .red
+            
+            return [delete, edit ,bought]
+        }
+        else{
+            return []
+        }
+    }
+    
+    func deleteItem(indexPath : IndexPath){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let item = items[indexPath.row]
+        managedContext.delete(item);
+        items.remove(at: indexPath.row)
+        self.tableView.reloadData()
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadShops"), object: nil)
+    }
+    
+    func buyItem(indexPath : IndexPath){
+        let item = items[indexPath.row]
+        
+        if isItemSelected(indexPath: indexPath) {
+            removeItemFromBoughtItems(indexPath: indexPath)
+        }else{
+            boughtItems.append(item)
+        }
+        self.tableView.reloadData()
+    }
+    
+    func removeItemFromBoughtItems(indexPath : IndexPath){
+        let item = items[indexPath.row]
+        if let index = boughtItems.index(of: item){
+            boughtItems.remove(at: index)
+        }
+    }
+    
+    func isItemSelected(indexPath : IndexPath)-> Bool{
+        let item = items[indexPath.row]
+        return boughtItems.contains(item)
+    }
+    
+    func editItem(indexPath : IndexPath){
+    }
+    
     @IBAction func finishPurchase(_ segue:UIStoryboardSegue){
         if let svc = segue.source as? FinishPurchaseViewController {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -143,7 +208,6 @@ class ProductTableViewController: UITableViewController {
             var purchases: [Purchase] = []
             let fetchRequest = NSFetchRequest<Purchase>(entityName: "Purchase")
             
-            // load data
             do {
                 purchases = try managedContext.fetch(fetchRequest)
             } catch let error as NSError {
@@ -192,125 +256,52 @@ class ProductTableViewController: UITableViewController {
     }
     
     @IBAction func saveProduct(_ segue:UIStoryboardSegue){
-        //if let nav = segue.source as? UINavigationController {
-            if let svc = segue.source as? AddProductViewController {
-                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                let managedContext = appDelegate.persistentContainer.viewContext
-                
-                var allItems: [Item] = []
-                let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
-                
-                // load data
-                do {
-                    allItems = try managedContext.fetch(fetchRequest)
-                } catch let error as NSError {
-                    print("Could not fetch. \(error), \(error.userInfo)")
-                }
-                
-                var max : Int16 = 0;
-                
-                for item in allItems{
-                    if(item.id > max){
-                        max = item.id
-                    }
-                }
-                max = max + 1
-                
-                let index = svc.productShopPicker.selectedRow(inComponent: 0)
-                let shop = svc.shops[index]
-                
-                let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
-                item.id = max;
-                item.shopId = shop.id
-                item.name = svc.productName.text
-                item.amount = svc.productAmount.text
-                item.desc = svc.productDescription.text
-                item.dueDate = svc.productDatePicker.date
-                
-                do {
-                    try managedContext.save()
-                    items.append(item)
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
-                
-                self.tableView.reloadData()
+        if let svc = segue.source as? AddProductViewController {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            var allItems: [Item] = []
+            let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+            
+            // load data
+            do {
+                allItems = try managedContext.fetch(fetchRequest)
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
             }
-        //}
+            
+            var max : Int16 = 0;
+            
+            for item in allItems{
+                if(item.id > max){
+                    max = item.id
+                }
+            }
+            max = max + 1
+            
+            let index = svc.productShopPicker.selectedRow(inComponent: 0)
+            let shop = svc.shops[index]
+            
+            let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
+            item.id = max;
+            item.shopId = shop.id
+            item.name = svc.productName.text
+            item.amount = svc.productAmount.text
+            item.desc = svc.productDescription.text
+            item.dueDate = svc.productDatePicker.date
+            
+            do {
+                try managedContext.save()
+                items.append(item)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            self.tableView.reloadData()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadShops"), object: nil)
+        }
     }
     
     @IBAction func cancelAddProduct(_ segue:UIStoryboardSegue){
-    }
-
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) -> [UITableViewRowAction]? {
-        // check if product has already been marked bought, if already bought dont show buttons
-        let item = items[indexPath.row]
-        if(!boughtItems.contains(item)){
-        
-            let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
-                self.buyItem(indexPath: indexPath)
-            }
-            bought.backgroundColor = .green
-            
-            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-                self.editItem(indexPath: indexPath)
-            }
-            edit.backgroundColor = .orange
-            
-            let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-                self.deleteItem(indexPath: indexPath)
-            }
-            delete.backgroundColor = .red
-            
-            return [delete, edit ,bought]
-        }
-        else{
-            return []
-        }
-    }
-    
-    func deleteItem(indexPath : IndexPath){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let item = items[indexPath.row]
-        managedContext.delete(item);
-        items.remove(at: indexPath.row)
-        self.tableView.reloadData()
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func buyItem(indexPath : IndexPath){
-        let item = items[indexPath.row]
-        
-        if isItemSelected(indexPath: indexPath) {
-            removeItemFromBoughtItems(indexPath: indexPath)
-        }else{
-            boughtItems.append(item)
-        }
-        self.tableView.reloadData()
-    }
-    
-    func removeItemFromBoughtItems(indexPath : IndexPath){
-        let item = items[indexPath.row]
-        if let index = boughtItems.index(of: item){
-            boughtItems.remove(at: index)
-        }
-    }
-    
-    func isItemSelected(indexPath : IndexPath)-> Bool{
-        let item = items[indexPath.row]
-        return boughtItems.contains(item)
-    }
-
-    func editItem(indexPath : IndexPath){
     }
 }

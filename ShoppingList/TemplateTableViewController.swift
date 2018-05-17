@@ -17,14 +17,9 @@ class TemplateTableViewController: UITableViewController {
         super.viewDidLoad()
         title = "Templates"
         
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<Template>(entityName: "Template")
-        // load data
         do {
             templates = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -97,7 +92,6 @@ class TemplateTableViewController: UITableViewController {
         let managedContext = appDelegate.persistentContainer.viewContext
         let template = templates[indexPath.row]
         
-        // load data
         do {
             let fetchRequest = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
             fetchRequest.predicate = NSPredicate(format: "templateId == %@", String.init(template.id))

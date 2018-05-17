@@ -23,40 +23,22 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.shopName.becomeFirstResponder()
-        // get app delegate
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
-        let managedContext = appDelegate.persistentContainer.viewContext
         
-        // request
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
-        // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
 
-        // focus keyboard for textfield
         shopName.delegate = self
         shopAddress.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    @IBAction func saveShopClicked(_ sender: Any) {
-        var exists = false
-        for savedShop in shops {
-            if (shopName.text == savedShop.name) {
-                exists = true
-            }
-        }
-        if !exists {
-            self.shopController?.saveShop(name: shopName.text!, address: shopAddress.text!)
-        }
-        self.dismiss(animated: true, completion: nil)
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -73,11 +55,21 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
     
     func alertWithUsage() {
         let alert = UIAlertController(title: "Information", message: "This Shop already exists!", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel,handler: {_ in
-            //self.shopName.becomeFirstResponder()
-            //self.dismiss(animated: true, completion: nil)
-        });
+        let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel,handler: {_ in });
         alert.addAction(action)
         self.present(alert, animated: true, completion:nil)
+    }
+    
+    @IBAction func saveShopClicked(_ sender: Any) {
+        var exists = false
+        for savedShop in shops {
+            if (shopName.text == savedShop.name) {
+                exists = true
+            }
+        }
+        if !exists {
+            self.shopController?.saveShop(name: shopName.text!, address: shopAddress.text!)
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }

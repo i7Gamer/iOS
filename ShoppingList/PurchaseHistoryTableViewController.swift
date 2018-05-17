@@ -20,30 +20,15 @@ class PurchaseHistoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: NSNotification.Name(rawValue: "reloadPurchases"), object: nil)
-
-        title = "Purchase History"
-        
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<Purchase>(entityName: "Purchase")
-        // load data
         do {
             purchases = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +37,6 @@ class PurchaseHistoryTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1

@@ -23,16 +23,10 @@ class TemplateItemTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTemplateItem(sender:)))
         title = templateName
         
-        // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        // get managed context
         let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // request
         let fetchRequest = NSFetchRequest<TemplateItem>(entityName: "TemplateItem")
         fetchRequest.predicate = NSPredicate(format: "templateId == %@", String.init(templateId))
-        
-        // load data
         do {
             templateItems = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
@@ -45,7 +39,6 @@ class TemplateItemTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
