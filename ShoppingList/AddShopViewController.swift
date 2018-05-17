@@ -17,6 +17,8 @@ class AddShopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.shopName.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
