@@ -15,7 +15,7 @@ class TemplateTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Vorlagen"
+        title = "Templates"
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
