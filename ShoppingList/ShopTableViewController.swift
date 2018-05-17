@@ -130,6 +130,33 @@ class ShopTableViewController: UITableViewController {
         }
     }
     
+    func saveShop(name:String, address:String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        var max : Int16 = 0;
+        
+        for shop in shops{
+            if(shop.id > max){
+                max = shop.id
+            }
+        }
+        max = max + 1
+        
+        let shop = NSEntityDescription.insertNewObject(forEntityName: "Shop", into: managedContext) as! Shop
+        shop.name = name
+        shop.address = address
+        shop.id = max;
+        do {
+            try managedContext.save()
+            shops.append(shop)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     @IBAction func cancelAddShop(_ segue:UIStoryboardSegue){
     }
 
@@ -168,14 +195,17 @@ class ShopTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if let vc = segue.destination as? AddShopViewController {
+            vc.shopController = self
+        }
     }
-    */
+    
 
 }
