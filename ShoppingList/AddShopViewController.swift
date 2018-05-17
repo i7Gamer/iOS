@@ -50,7 +50,6 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
         var exists = false
         for savedShop in shops {
             if (shopName.text == savedShop.name) {
-                print("shop already exists")
                 exists = true
             }
         }
@@ -62,20 +61,10 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         
-        print("in textFieldShouldReturn")
-        //textField.resignFirstResponder()
-        /*if (textField === self.shopName) {
-            self.shopName.becomeFirstResponder()
-        }
-        else if (textField === self.shopAddress) {
-            self.shopAddress.becomeFirstResponder()
-        }
-        */
         if (textField === self.shopName) {
             for savedShop in shops {
                 if (shopName.text == savedShop.name) {
                     alertWithUsage()
-                    print("shop already exists")
                     return false
                 }
             }
