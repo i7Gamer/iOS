@@ -23,6 +23,7 @@ class AddShopViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.shopName.becomeFirstResponder()
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         // get managed context
