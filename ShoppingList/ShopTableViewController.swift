@@ -72,7 +72,6 @@ class ShopTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
-        print(shop.id)
         fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String(shop.id))
         
         // load data
