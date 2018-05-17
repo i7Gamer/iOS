@@ -16,6 +16,7 @@ class AddTemplateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.templateName.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
