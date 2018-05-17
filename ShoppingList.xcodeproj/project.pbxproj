@@ -15,6 +15,7 @@
 		7C9BC3E520762A75002EE66E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9BC3E420762A75002EE66E /* CoreData.framework */; };
 		7C9BC40820764A99002EE66E /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BC40720764A99002EE66E /* ProductTableViewController.swift */; };
 		7C9BC40A207657AC002EE66E /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9BC409207657AC002EE66E /* AddProductViewController.swift */; };
+		7CC1F8E620AD814A00ED04BC /* PurchaseHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC1F8E520AD814A00ED04BC /* PurchaseHistoryTableViewController.swift */; };
 		7CCD04DB206CEDF400FDE9AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DA206CEDF400FDE9AC /* AppDelegate.swift */; };
 		7CCD04DD206CEDF400FDE9AC /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DC206CEDF400FDE9AC /* FirstViewController.swift */; };
 		7CCD04DF206CEDF400FDE9AC /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD04DE206CEDF400FDE9AC /* SecondViewController.swift */; };
@@ -35,6 +36,7 @@
 		7C9BC3E420762A75002EE66E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		7C9BC40720764A99002EE66E /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		7C9BC409207657AC002EE66E /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		7CC1F8E520AD814A00ED04BC /* PurchaseHistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryTableViewController.swift; sourceTree = "<group>"; };
 		7CCD04D7206CEDF400FDE9AC /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CCD04DA206CEDF400FDE9AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CCD04DC206CEDF400FDE9AC /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				431CED9C2091FF1C00910BC6 /* TemplateItemTableViewController.swift */,
 				431CED9E209202BF00910BC6 /* AddTemplateItemController.swift */,
 				7C144EBA209B2E2F00CC7BD7 /* FinishPurchaseViewController.swift */,
+				7CC1F8E520AD814A00ED04BC /* PurchaseHistoryTableViewController.swift */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				7CCD04FC206D0FF100FDE9AC /* ShoppingListDataModel.xcdatamodeld in Sources */,
 				431CED9B2091F85D00910BC6 /* AddTemplateViewController.swift in Sources */,
 				7C144EBB209B2E2F00CC7BD7 /* FinishPurchaseViewController.swift in Sources */,
+				7CC1F8E620AD814A00ED04BC /* PurchaseHistoryTableViewController.swift in Sources */,
 				7CCD04DD206CEDF400FDE9AC /* FirstViewController.swift in Sources */,
 				7C9BC40820764A99002EE66E /* ProductTableViewController.swift in Sources */,
 				7CCD04F3206CF5F800FDE9AC /* ShopTableViewController.swift in Sources */,
