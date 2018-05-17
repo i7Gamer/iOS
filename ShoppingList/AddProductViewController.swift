@@ -22,6 +22,8 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.productName.becomeFirstResponder()
+        
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         // get managed context

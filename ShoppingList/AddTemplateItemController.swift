@@ -21,6 +21,8 @@ class AddTemplateItemController: UIViewController, UIPickerViewDelegate, UIPicke
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.templateItemName.becomeFirstResponder()
+        
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         // get managed context
