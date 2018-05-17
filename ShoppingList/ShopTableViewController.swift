@@ -10,18 +10,11 @@ import UIKit
 import CoreData
 
 class ShopTableViewController: UITableViewController {
-
     var shops: [Shop] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Shopping List"
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -30,6 +23,8 @@ class ShopTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
+        fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
+        
         // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
@@ -37,8 +32,6 @@ class ShopTableViewController: UITableViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-    
-    //func tableView(UITableView, didDeselectRowAt: IndexPath)
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -53,30 +46,45 @@ class ShopTableViewController: UITableViewController {
         destination.shopName = (shop.value(forKeyPath: "name") as? String)!
         
         navigationController?.pushViewController(destination, animated: true)
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return shops.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let shop = shops[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewcell", for: indexPath)
-        cell.textLabel?.text = shop.value(forKeyPath: "name") as? String
+        
+        var items: [Item] = []
+        // get app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return cell}
+        // get managed context
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // request
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        print(shop.id)
+        fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String(shop.id))
+        
+        // load data
+        do {
+            items = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        let name = shop.value(forKeyPath: "name") as? String?
+        
+        cell.textLabel?.text = name!! + " (" + String(items.count) + ")"
         cell.detailTextLabel?.text = shop.value(forKeyPath: "address") as? String
         return cell
     }
@@ -89,9 +97,11 @@ class ShopTableViewController: UITableViewController {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             let managedContext = appDelegate.persistentContainer.viewContext
-            let shop = shops[indexPath.row]
-            managedContext.delete(shop);
-            shops.remove(at: indexPath.row)
+            
+            
+            var shop = shops[indexPath.row]
+            shop.hasBeenDeleted = true;
+            
             do {
                 try managedContext.save()
             } catch let error as NSError {

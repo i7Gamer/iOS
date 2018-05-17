@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -51,7 +51,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Shopping List" id="daJ-va-ey4"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="TfY-HA-FSf">
+                    <navigationItem key="navigationItem" title="Shopping List" id="TfY-HA-FSf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="VHe-qE-WWH">
                             <connections>
                                 <segue destination="WvA-PE-ZsB" kind="presentation" id="BbB-dm-dui"/>
@@ -64,7 +64,7 @@
             </objects>
             <point key="canvasLocation" x="1295" y="-419"/>
         </scene>
-        <!--Add Shop View Controller-->
+        <!--New shop-->
         <scene sceneID="fWL-rd-WJ7">
             <objects>
                 <viewController id="bEg-5a-9we" customClass="AddShopViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -117,7 +117,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sTZ-lN-uqF"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bse-xc-TLt">
+                    <navigationItem key="navigationItem" title="New shop" id="bse-xc-TLt">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rla-EP-ei6">
                             <connections>
                                 <segue destination="yox-B6-oTQ" kind="unwind" unwindAction="cancelAddShop:" id="cZm-S4-QI0"/>
@@ -171,13 +171,14 @@
                     <connections>
                         <segue destination="vt0-tD-ifQ" kind="relationship" relationship="viewControllers" id="hZ5-gt-PnG"/>
                         <segue destination="YIZ-fG-zn3" kind="relationship" relationship="viewControllers" id="FNx-Of-8ky"/>
+                        <segue destination="xII-2V-QLt" kind="relationship" relationship="viewControllers" id="DUl-vu-v4Z"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-463" y="40"/>
         </scene>
-        <!--Template Table View Controller-->
+        <!--Templates-->
         <scene sceneID="I9i-he-3Kb">
             <objects>
                 <tableViewController id="OWw-P5-ndI" customClass="TemplateTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -209,7 +210,7 @@
                             <outlet property="delegate" destination="OWw-P5-ndI" id="jOY-Rr-xtq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="uj7-Vv-k1K">
+                    <navigationItem key="navigationItem" title="Templates" id="uj7-Vv-k1K">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Zu8-RI-nKI">
                             <connections>
                                 <segue destination="Qfx-31-Fyt" kind="presentation" id="vSi-Vt-OGS"/>
@@ -237,7 +238,7 @@
             </objects>
             <point key="canvasLocation" x="2076" y="349"/>
         </scene>
-        <!--Add Template View Controller-->
+        <!--New template-->
         <scene sceneID="d4n-3x-5jI">
             <objects>
                 <viewController id="4cT-6B-ieI" customClass="AddTemplateViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -268,7 +269,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="q83-db-nAu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="lom-bu-ZA5">
+                    <navigationItem key="navigationItem" title="New template" id="lom-bu-ZA5">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Qg6-1G-UEE">
                             <connections>
                                 <segue destination="Wjc-G1-xic" kind="unwind" unwindAction="cancelAddTemplate:" id="kuM-12-qNR"/>
@@ -334,6 +335,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z6U-98-p2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2065" y="1120"/>
+        </scene>
+        <!--Purchase History-->
+        <scene sceneID="EjA-FT-Mfv">
+            <objects>
+                <tableViewController id="iTt-tf-6ZV" customClass="PurchaseHistoryTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bZF-EL-5DG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" textLabel="OYm-CQ-lGA" detailTextLabel="ouU-JN-Afm" style="IBUITableViewCellStyleSubtitle" id="GIA-g5-wmq">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GIA-g5-wmq" id="xr7-f3-YeX">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OYm-CQ-lGA">
+                                            <rect key="frame" x="16" y="5" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ouU-JN-Afm">
+                                            <rect key="frame" x="16" y="25.5" width="44" height="14.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="iTt-tf-6ZV" id="iPX-2r-8G8"/>
+                            <outlet property="delegate" destination="iTt-tf-6ZV" id="gg3-Kv-DmA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Purchase History" id="u5a-gg-ElK"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Am-Hv-kfh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1449" y="1883"/>
+        </scene>
+        <!--Purchase History-->
+        <scene sceneID="lTR-rH-LCp">
+            <objects>
+                <navigationController id="xII-2V-QLt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Purchase History" id="Rby-Ii-X7R"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="6nI-nD-yGp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iTt-tf-6ZV" kind="relationship" relationship="rootViewController" id="eaO-yj-9Zr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HJa-BZ-4ja" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="500" y="1883"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qUl-Ht-pfD">
@@ -481,7 +544,7 @@
             </objects>
             <point key="canvasLocation" x="2076" y="-1906"/>
         </scene>
-        <!--Finish Purchase View Controller-->
+        <!--Finish purchase-->
         <scene sceneID="ONv-7i-j0J">
             <objects>
                 <viewController id="ua9-ns-p2o" customClass="FinishPurchaseViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -501,13 +564,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="XCn-U0-rXm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ILH-Zk-BMV">
+                    <navigationItem key="navigationItem" title="Finish purchase" id="ILH-Zk-BMV">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="BKk-CN-HVa">
                             <connections>
                                 <segue destination="fT0-qL-EOZ" kind="unwind" unwindAction="cancelPurchase:" id="ghu-bN-jXV"/>
@@ -548,13 +611,13 @@
         <scene sceneID="DjD-xX-0p3">
             <objects>
                 <tableViewController storyboardIdentifier="ItemViewController" id="d7n-c4-c3e" customClass="ProductTableViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="73y-5K-oXV">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="73y-5K-oXV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="productTableViewCell" textLabel="IDB-4l-fHN" detailTextLabel="aTT-fX-EcM" style="IBUITableViewCellStyleSubtitle" id="yLC-D4-hs5">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yLC-D4-hs5" id="NQM-jS-MWN">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -578,7 +641,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="finishPurchaseButtonCell" textLabel="ayC-BQ-K6n" style="IBUITableViewCellStyleDefault" id="JOe-EJ-udw">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JOe-EJ-udw" id="gdp-gg-efi">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -606,7 +669,7 @@
             </objects>
             <point key="canvasLocation" x="2065" y="-1196"/>
         </scene>
-        <!--Add Product View Controller-->
+        <!--New product-->
         <scene sceneID="TAi-Iw-aMM">
             <objects>
                 <viewController id="wER-KQ-TaM" customClass="AddProductViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -724,7 +787,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0Nd-9A-p1p"/>
                     </view>
-                    <navigationItem key="navigationItem" id="33a-KN-lpd">
+                    <navigationItem key="navigationItem" title="New product" id="33a-KN-lpd">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7pU-dz-tZl">
                             <connections>
                                 <segue destination="8i4-WD-6zl" kind="unwind" unwindAction="cancelAddProduct:" id="Wec-gq-F1S"/>
