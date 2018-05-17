@@ -111,6 +111,8 @@ class TemplateTableViewController: UITableViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         self.tableView.reloadData()
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadShops"), object: nil)
     }
     
     func moveTemplateItemToShop(_ templateItem : TemplateItem){

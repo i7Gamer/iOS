@@ -29,6 +29,7 @@ class AddTemplateItemController: UIViewController, UIPickerViewDelegate, UIPicke
         let managedContext = appDelegate.persistentContainer.viewContext
         // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
+        fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted = false")
         // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
