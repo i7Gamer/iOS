@@ -14,6 +14,7 @@ class FinishPurchaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.total.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
