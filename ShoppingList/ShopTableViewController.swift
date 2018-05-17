@@ -139,6 +139,82 @@ class ShopTableViewController: UITableViewController {
         }
     }
     
+    func saveShop(name:String, address:String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        var max : Int16 = 0;
+        
+        for shop in shops{
+            if(shop.id > max){
+                max = shop.id
+            }
+        }
+        max = max + 1
+        
+        let shop = NSEntityDescription.insertNewObject(forEntityName: "Shop", into: managedContext) as! Shop
+        shop.name = name
+        shop.address = address
+        shop.id = max;
+        do {
+            try managedContext.save()
+            shops.append(shop)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     @IBAction func cancelAddShop(_ segue:UIStoryboardSegue){
     }
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
+    /*
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if let vc = segue.destination as? AddShopViewController {
+            vc.shopController = self
+        }
+    }
+    
+
 }

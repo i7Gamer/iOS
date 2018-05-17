@@ -125,7 +125,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="j28-m6-rcK">
                             <connections>
-                                <segue destination="yox-B6-oTQ" kind="unwind" unwindAction="saveShop:" id="XLg-Xz-wQk"/>
+                                <action selector="saveShopClicked:" destination="bEg-5a-9we" id="eXe-Cx-Mbj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
