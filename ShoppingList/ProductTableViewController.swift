@@ -174,7 +174,6 @@ class ProductTableViewController: UITableViewController {
             }
             
             boughtItems = []
-            print(max);
             self.tableView.reloadData()
         }
     }
@@ -281,8 +280,6 @@ class ProductTableViewController: UITableViewController {
     }
     
     func buyItem(indexPath : IndexPath){
-        print("bought item tapped")
-        
         // add item to bought list
         let item = items[indexPath.row]
         boughtItems.append(item)
@@ -291,6 +288,5 @@ class ProductTableViewController: UITableViewController {
     }
     
     func editItem(indexPath : IndexPath){
-        print("edit item tapped")
     }
 }
