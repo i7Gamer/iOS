@@ -11,13 +11,10 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return true}
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -101,12 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 } catch let error as NSError {
                     print("Could not save. \(error), \(error.userInfo)")
                 }
-                
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
         return true
     }
 
@@ -176,6 +171,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
-
