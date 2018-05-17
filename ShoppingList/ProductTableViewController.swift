@@ -1,7 +1,6 @@
 //
 //  ProductTableViewController.swift
 //  ShoppingList
-//
 //  Created by Timo Rzipa on 05.04.18.
 //  Copyright © 2018 Timo Rzipa. All rights reserved.
 //
