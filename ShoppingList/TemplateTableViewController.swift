@@ -138,10 +138,34 @@ class TemplateTableViewController: UITableViewController {
         }
         max = max + 1
         
+        //check if shop does already exist
+        // request
+        let shopRequest = NSFetchRequest<Shop>(entityName: "Shop")
+        shopRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
+        var allAvailableShops: [Shop] = []
+        // load data
+        do {
+            allAvailableShops = try managedContext.fetch(shopRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        var foundAvailableShop = false
+        for shop in allAvailableShops{
+            if(shop.id == templateItem.id){
+                foundAvailableShop = true
+            }
+        }
+        
         let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
         item.id = max;
         item.name = templateItem.name
-        item.shopId = templateItem.shopId
+        if foundAvailableShop{
+            item.shopId = templateItem.shopId
+        } else {
+            item.shopId = 0 //this is always the default shop!
+        }
+        
         item.amount = templateItem.amount
         item.desc = templateItem.desc
         
