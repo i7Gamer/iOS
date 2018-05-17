@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         do {
-            
             // get all purchases
             let fetchRequestPurchases = NSFetchRequest<Purchase>(entityName: "Purchase")
             var purchases: [Purchase] = []

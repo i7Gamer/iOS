@@ -240,32 +240,31 @@ class ProductTableViewController: UITableViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) ->
-        [UITableViewRowAction]? {
-            // check if product has already been marked bought, if already bought dont show buttons
-            let item = items[indexPath.row]
-            if(!boughtItems.contains(item)){
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath : IndexPath) -> [UITableViewRowAction]? {
+        // check if product has already been marked bought, if already bought dont show buttons
+        let item = items[indexPath.row]
+        if(!boughtItems.contains(item)){
+        
+            let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
+                self.buyItem(indexPath: indexPath)
+            }
+            bought.backgroundColor = .green
             
-                let bought = UITableViewRowAction(style: .normal, title: "Bought") { action, index in
-                    self.buyItem(indexPath: indexPath)
-                }
-                bought.backgroundColor = .green
-                
-                let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
-                    self.editItem(indexPath: indexPath)
-                }
-                edit.backgroundColor = .orange
-                
-                let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
-                    self.deleteItem(indexPath: indexPath)
-                }
-                delete.backgroundColor = .red
-                
-                return [delete, edit ,bought]
+            let edit = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+                self.editItem(indexPath: indexPath)
             }
-            else{
-                return []
+            edit.backgroundColor = .orange
+            
+            let delete = UITableViewRowAction(style: .destructive, title: "Delete") { action, index in
+                self.deleteItem(indexPath: indexPath)
             }
+            delete.backgroundColor = .red
+            
+            return [delete, edit ,bought]
+        }
+        else{
+            return []
+        }
     }
     
     func deleteItem(indexPath : IndexPath){
