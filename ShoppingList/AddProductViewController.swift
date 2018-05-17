@@ -18,7 +18,7 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var productDatePicker: UIDatePicker!
     
     var shops: [Shop] = []
-    
+    var shopName : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,12 +30,22 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
         let managedContext = appDelegate.persistentContainer.viewContext
         // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
+        fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
         // load data
         do {
             shops = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        var i = 0
+        for shop in shops{
+            if(shop.name == shopName){
+                productShopPicker.selectRow(i, inComponent: 0, animated: false)
+            }
+            i = i + 1
+        }
+
         
         self.productShopPicker.delegate = self as UIPickerViewDelegate
         self.productShopPicker.dataSource = self as UIPickerViewDataSource

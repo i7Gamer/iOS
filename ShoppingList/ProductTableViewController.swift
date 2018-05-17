@@ -64,6 +64,9 @@ class ProductTableViewController: UITableViewController {
     @objc func addProduct(sender: Any?) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! UINavigationController
+        if let vc = destination.viewControllers.first as? AddProductViewController {
+            vc.shopName = self.shopName
+        }
         self.present(destination, animated: true, completion: nil)
     }
     

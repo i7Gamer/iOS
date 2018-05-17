@@ -14,7 +14,8 @@ class ShopTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Shopping List"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: NSNotification.Name(rawValue: "reloadShops"), object: nil)
         
         // get app delegate
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -31,6 +32,11 @@ class ShopTableViewController: UITableViewController {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+    }
+    
+    @objc func reloadList(){
+        //load data here
+        self.tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
