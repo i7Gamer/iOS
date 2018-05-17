@@ -42,7 +42,6 @@ class ShopTableViewController: UITableViewController {
         let shop = shops[indexPath.row];
         
         destination.shopId = (shop.value(forKeyPath: "id") as? Int16)!
-        
         destination.shopName = (shop.value(forKeyPath: "name") as? String)!
         
         navigationController?.pushViewController(destination, animated: true)

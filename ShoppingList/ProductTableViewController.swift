@@ -102,6 +102,8 @@ class ProductTableViewController: UITableViewController {
             
         if(boughtItems.contains(item)){
             cell.accessoryType = UITableViewCellAccessoryType.checkmark;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryType.none;
         }
         
         return cell
@@ -115,6 +117,7 @@ class ProductTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             tableView.deselectRow(at: indexPath, animated: true)
+            self.buyItem(indexPath: indexPath)
         }
         else{
             if(boughtItems.count > 0){
@@ -283,13 +286,28 @@ class ProductTableViewController: UITableViewController {
     }
     
     func buyItem(indexPath : IndexPath){
-        // add item to bought list
         let item = items[indexPath.row]
-        boughtItems.append(item)
         
+        if isItemSelected(indexPath: indexPath) {
+            removeItemFromBoughtItems(indexPath: indexPath)
+        }else{
+            boughtItems.append(item)
+        }
         self.tableView.reloadData()
     }
     
+    func removeItemFromBoughtItems(indexPath : IndexPath){
+        let item = items[indexPath.row]
+        if let index = boughtItems.index(of: item){
+            boughtItems.remove(at: index)
+        }
+    }
+    
+    func isItemSelected(indexPath : IndexPath)-> Bool{
+        let item = items[indexPath.row]
+        return boughtItems.contains(item)
+    }
+
     func editItem(indexPath : IndexPath){
     }
 }
