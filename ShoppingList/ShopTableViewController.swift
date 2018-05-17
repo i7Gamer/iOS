@@ -97,7 +97,7 @@ class ShopTableViewController: UITableViewController {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             let managedContext = appDelegate.persistentContainer.viewContext
             
-            var shop = shops[indexPath.row]
+            let shop = shops[indexPath.row]
             shop.hasBeenDeleted = true;
             
             do {
