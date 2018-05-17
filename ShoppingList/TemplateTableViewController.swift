@@ -75,12 +75,12 @@ class TemplateTableViewController: UITableViewController {
         }
         delete.backgroundColor = .red
         
-        let moveToShop = UITableViewRowAction(style: .destructive, title: "Move to shop") { action, index in
+        let addToShoppingList = UITableViewRowAction(style: .destructive, title: "Add to Shopping list") { action, index in
             self.moveTemplateItemsToShop(indexPath: indexPath)
         }
-        moveToShop.backgroundColor = .green
+        addToShoppingList.backgroundColor = .green
         
-        return [delete, moveToShop]
+        return [delete, addToShoppingList]
     }
     
     func deleteItem(indexPath : IndexPath){
