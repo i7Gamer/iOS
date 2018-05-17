@@ -61,10 +61,6 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    
-    
     /*
     // MARK: - Navigation
 
@@ -74,18 +70,5 @@ class AddProductViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Pass the selected object to the new view controller.
     }
     */
-    
-    // delegate wie bei tableview machen, noch einmal nachfragen
-    
-    func view(forRow: Int, forComponent: Int) {
-        //return shops[forRow].name
-    }
-
-    
-    // return shop to store in db
-    func pickerView(_ pickerView: UIPickerView, didSelectRow: Int, inComponent: Int) {
-        
-    }
-
 
 }

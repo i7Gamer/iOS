@@ -34,12 +34,13 @@ class ProductTableViewController: UITableViewController {
         let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
         fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String.init(shopId))
         
-        // load data
+        // load data for items
         do {
             items = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +71,6 @@ class ProductTableViewController: UITableViewController {
     @objc func addProduct(sender: Any?) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "AddProductViewController") as! UINavigationController
-        
         self.present(destination, animated: true, completion: nil)
     }
     
@@ -94,8 +94,8 @@ class ProductTableViewController: UITableViewController {
         // date to string
         if let date = item.value(forKeyPath: "dueDate") as? Date {
             let formatter = DateFormatter()
-            formatter.dateStyle = DateFormatter.Style.long
-            formatter.timeStyle = .medium
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             dateString = formatter.string(from: date)
             
             cell.textLabel?.text = amountString + name
@@ -216,13 +216,15 @@ class ProductTableViewController: UITableViewController {
                 }
                 max = max + 1
                 
+                let index = svc.productShopPicker.selectedRow(inComponent: 0)
+                let shop = svc.shops[index]
+                
                 let item = NSEntityDescription.insertNewObject(forEntityName: "Item", into: managedContext) as! Item
                 item.id = max;
+                item.shopId = shop.id
                 item.name = svc.productName.text
-                item.shopId = shopId;
                 item.amount = svc.productAmount.text
                 item.desc = svc.productDescription.text
-                //item.shop = svc.productShopPicker.
                 item.dueDate = svc.productDatePicker.date
                 
                 do {
