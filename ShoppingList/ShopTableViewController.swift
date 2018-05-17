@@ -23,6 +23,7 @@ class ShopTableViewController: UITableViewController {
         
         // request
         let fetchRequest = NSFetchRequest<Shop>(entityName: "Shop")
+        fetchRequest.predicate = NSPredicate(format: "hasBeenDeleted == false")
         
         // load data
         do {
@@ -62,7 +63,28 @@ class ShopTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let shop = shops[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableviewcell", for: indexPath)
-        cell.textLabel?.text = shop.value(forKeyPath: "name") as? String
+        
+        var items: [Item] = []
+        // get app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return cell}
+        // get managed context
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // request
+        let fetchRequest = NSFetchRequest<Item>(entityName: "Item")
+        print(shop.id)
+        fetchRequest.predicate = NSPredicate(format: "shopId == %@ && purchaseId == 0", String(shop.id))
+        
+        // load data
+        do {
+            items = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        let name = shop.value(forKeyPath: "name") as? String?
+        
+        cell.textLabel?.text = name!! + " (" + String(items.count) + ")"
         cell.detailTextLabel?.text = shop.value(forKeyPath: "address") as? String
         return cell
     }
@@ -75,9 +97,11 @@ class ShopTableViewController: UITableViewController {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             let managedContext = appDelegate.persistentContainer.viewContext
-            let shop = shops[indexPath.row]
-            managedContext.delete(shop);
-            shops.remove(at: indexPath.row)
+            
+            
+            var shop = shops[indexPath.row]
+            shop.hasBeenDeleted = true;
+            
             do {
                 try managedContext.save()
             } catch let error as NSError {

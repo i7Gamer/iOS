@@ -154,7 +154,8 @@ class ProductTableViewController: UITableViewController {
             
             let purchase = NSEntityDescription.insertNewObject(forEntityName: "Purchase", into: managedContext) as! Purchase
             purchase.id = max
-            purchase.total = Double(svc.total.text!)!
+            let total = svc.total.text!.replacingOccurrences(of: ",", with: ".")
+            purchase.total = Double(total)!
             purchase.date = Date.init()
             
             do {
@@ -176,6 +177,8 @@ class ProductTableViewController: UITableViewController {
             
             boughtItems = []
             self.tableView.reloadData()
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadPurchases"), object: nil)
         }
     }
     

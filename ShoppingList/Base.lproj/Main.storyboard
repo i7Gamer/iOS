@@ -238,7 +238,7 @@
             </objects>
             <point key="canvasLocation" x="2076" y="349"/>
         </scene>
-        <!--Add Template View Controller-->
+        <!--New template-->
         <scene sceneID="d4n-3x-5jI">
             <objects>
                 <viewController id="4cT-6B-ieI" customClass="AddTemplateViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
@@ -269,7 +269,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="q83-db-nAu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="lom-bu-ZA5">
+                    <navigationItem key="navigationItem" title="New template" id="lom-bu-ZA5">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Qg6-1G-UEE">
                             <connections>
                                 <segue destination="Wjc-G1-xic" kind="unwind" unwindAction="cancelAddTemplate:" id="kuM-12-qNR"/>
@@ -564,7 +564,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

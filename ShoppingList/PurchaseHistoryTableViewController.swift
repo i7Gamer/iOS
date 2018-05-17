@@ -13,8 +13,15 @@ class PurchaseHistoryTableViewController: UITableViewController {
 
     var purchases: [Purchase] = []
     
+    @objc func reloadList(){
+        //load data here
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadList), name: NSNotification.Name(rawValue: "reloadPurchases"), object: nil)
 
         title = "Purchase History"
         
